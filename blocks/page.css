@@ -1,0 +1,14 @@
+.pages {
+  background-color: black;
+  width: 880px;
+  margin: auto;
+}
+
+body {
+  background-color: black;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
