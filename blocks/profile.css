@@ -2,6 +2,7 @@
   margin: 40px 0 50px ;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .profile__avatar {
