@@ -20,6 +20,7 @@
 .profile__info-item {
   display: flex;
   align-items: center;
+  margin: 0;
 }
 
 .profile__info-name {
@@ -28,6 +29,7 @@
   font-weight: 500;
   font-size: 42px;
   line-height: 48px;
+  margin: 0;
   margin-right: 18px;
 }
 
@@ -35,6 +37,11 @@
   height: 24px;
   width: 24px;
   border-radius: 1px;
+  opacity: 1;
+}
+
+.profile__info-button:hover {
+  opacity: 0.5;
 }
 
 .profile__info-funtion {
@@ -55,8 +62,15 @@
   border-radius: 2px;
   background-color: transparent;
   color: #FFFFFF;
+  font-size: 33px;
+  cursor: pointer;
+  transition: opacity 0.3s ease
 }
 
+.profile__button:hover {
+  opacity: 0.5;
+
+}
 
 @media screen and (min-width: 320px) and  (max-width:720px) {
   .profile {
@@ -93,10 +107,6 @@
   .profile__info-funtion {
     font-size: 14px;
     line-height: 16.94px;
-  }
-  .profile__info-button {
-    height: 18px;
-    width: 18px;
   }
 
   .profile__button {

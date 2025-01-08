@@ -32,7 +32,7 @@
           />
           <div class="profile__info">
             <div class="profile__info-item">
-              <h1 class="profile__info-name">Jacques Cousteau</h1>
+              <h1 id="profile__info-name" class="profile__info-name">Jacques Cousteau</h1>
               <a href="#"
                 ><img
                   src="./images/Edit Button.png"
@@ -42,15 +42,20 @@
             </div>
             <h2 class="profile__info-funtion">Explorador</h2>
           </div>
-          <div class="profile__button">
-            <a class="profile__button-item" href="#"
-              ><img
-                src="./images/button mas.png"
-                alt="Button mas"
-                class="profile__button-mas"
-            /></a>
-          </div>
+          <button class="profile__button">+</button>
         </section>
+        <!-- Modal para editar los datos -->
+        <div class="modal" id="editModal">
+          <div class="modal__content">
+            <span class="modal__close" id="closeButton">&times;</span>
+            <h2 class="modal__content-title">Editar Perfil</h2>
+            <input class="modal__content-input" type="text" id="nameInput"  placeholder="Nombre"/>
+            <input class="modal__content-input" type="text" id="funtionInput" placeholder="Acerca de mi"/>
+            <div class="modal__actions">
+              <button id="saveButton">Guardar</button>
+            </div>
+          </div>
+        </div>
         <section class="elements">
           <div class="element">
             <img
@@ -60,12 +65,20 @@
             />
             <div class="element__item">
               <h2 class="element__item-title">Valle de Yosemite</h2>
-
-              <img
-                src="./images/Group_corazon.svg"
-                alt="Logo de corazon"
-                class="element__item-like"
-              />
+              <div class="element__item-heart">
+                <svg
+                class="heart-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="black"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 21C12 21 4 13.91 4 8.33C4 5.51 6.24 3 9 3C10.63 3 12 4.19 12 4.19C12 4.19 13.37 3 15 3C17.76 3 20 5.51 20 8.33C20 13.91 12 21 12 21Z" />
+              </svg>
+              </div>
             </div>
           </div>
           <div class="element">
@@ -76,12 +89,20 @@
             />
             <div class="element__item">
               <h2 class="element__item-title">Lago Louise</h2>
-
-              <img
-                src="./images/Group_corazon.svg"
-                alt="Logo de corazon"
-                class="element__item-like"
-              />
+              <div class="element__item-heart">
+                <svg
+                class="heart-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="black"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 21C12 21 4 13.91 4 8.33C4 5.51 6.24 3 9 3C10.63 3 12 4.19 12 4.19C12 4.19 13.37 3 15 3C17.76 3 20 5.51 20 8.33C20 13.91 12 21 12 21Z" />
+              </svg>
+              </div>
             </div>
           </div>
           <div class="element">
@@ -93,11 +114,20 @@
             <div class="element__item">
               <h2 class="element__item-title">Montañas Calvas</h2>
 
-              <img
-                src="./images/Group_corazon.svg"
-                alt="Logo de corazon"
-                class="element__item-like"
-              />
+              <div class="element__item-heart">
+                <svg
+                class="heart-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="black"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 21C12 21 4 13.91 4 8.33C4 5.51 6.24 3 9 3C10.63 3 12 4.19 12 4.19C12 4.19 13.37 3 15 3C17.76 3 20 5.51 20 8.33C20 13.91 12 21 12 21Z" />
+              </svg>
+              </div>
             </div>
           </div>
           <div class="element">
@@ -108,12 +138,20 @@
             />
             <div class="element__item">
               <h2 class="element__item-title">Vanois National</h2>
-
-              <img
-                src="./images/Group_corazon.svg"
-                alt="Logo de corazon"
-                class="element__item-like"
-              />
+              <div class="element__item-heart">
+                <svg
+                class="heart-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="black"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 21C12 21 4 13.91 4 8.33C4 5.51 6.24 3 9 3C10.63 3 12 4.19 12 4.19C12 4.19 13.37 3 15 3C17.76 3 20 5.51 20 8.33C20 13.91 12 21 12 21Z" />
+              </svg>
+              </div>
             </div>
           </div>
           <div class="element">
@@ -124,12 +162,20 @@
             />
             <div class="element__item">
               <h2 class="element__item-title">Latemar</h2>
-
-              <img
-                src="./images/Group_corazon.svg"
-                alt="Logo de corazon"
-                class="element__item-like"
-              />
+              <div class="element__item-heart">
+                <svg
+                class="heart-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="black"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 21C12 21 4 13.91 4 8.33C4 5.51 6.24 3 9 3C10.63 3 12 4.19 12 4.19C12 4.19 13.37 3 15 3C17.76 3 20 5.51 20 8.33C20 13.91 12 21 12 21Z" />
+              </svg>
+              </div>
             </div>
           </div>
           <div class="element">
@@ -140,12 +186,20 @@
             />
             <div class="element__item">
               <h2 class="element__item-title">Lago di Braies</h2>
-
-              <img
-                src="./images/Group_corazon.svg"
-                alt="Logo de corazon"
-                class="element__item-like"
-              />
+              <div class="element__item-heart">
+                <svg
+                class="heart-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="black"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 21C12 21 4 13.91 4 8.33C4 5.51 6.24 3 9 3C10.63 3 12 4.19 12 4.19C12 4.19 13.37 3 15 3C17.76 3 20 5.51 20 8.33C20 13.91 12 21 12 21Z" />
+              </svg>
+              </div>
             </div>
           </div>
         </section>
@@ -154,5 +208,6 @@
         <p class="footer__copyright">&#169; 2021 Around The U.S.</p>
       </footer>
     </div>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
