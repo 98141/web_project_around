@@ -5,3 +5,14 @@
 .header__vector {
   padding-bottom: 41px;
 }
+
+@media screen and (min-width: 320px) and  (max-width:720px) {
+  .header__vector {
+    height: 24px;
+    width: 126px;
+    padding-bottom: 32px;
+  }
+  .header__line {
+    width: 320px;
+  }
+}

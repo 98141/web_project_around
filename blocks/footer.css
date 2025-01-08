@@ -1,7 +1,23 @@
-.footer-copyright {
+.footer__copyright {
   color: #545454;
-  max-width: 282px;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21.78px;
+  max-width: 318px;
   width: 100%;
-  height: 14px;
+  height: 18px;
   margin-bottom: 60px;
+
+}
+
+@media screen and (min-width: 320px) and  (max-width:720px) {
+  .footer__copyright {
+    margin: auto;
+    margin-bottom: 36px;
+    max-width: 282px;
+    font-size: 14px;
+    line-height: 16.94px;
+    height: 14px;
+  }
 }
