@@ -35,6 +35,10 @@
   cursor: pointer;
 }
 
+.modal__close:hover {
+  opacity: 0.5;
+}
+
 .modal__content-title {
   font-family: Inter;
   font-weight: 900;
