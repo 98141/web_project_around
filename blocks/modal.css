@@ -83,3 +83,37 @@
 .modal__actions:hover button {
   opacity: 0.5;
 }
+
+@media screen and (min-width: 320px) and  (max-width:720px) {
+  .modal__content {
+    width: 282px;
+    height: 322px;
+    padding: 0 22px;
+  }
+
+  .modal__close {
+    position: absolute;
+    top: -60px;
+    right: 0px;
+  }
+
+  .modal__content-title  {
+    padding: 25px 0 76px;
+  }
+
+  .modal__content-input {
+    width: 238px;
+    height: 26px;
+    margin-bottom: 30px;
+  }
+
+  .modal__actions {
+    margin: 16px 0 25px;
+  }
+
+  .modal__actions button {
+    width: 238px;
+    height: 46px;
+    margin: 0;
+  }
+}
