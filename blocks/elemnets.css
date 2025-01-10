@@ -63,7 +63,7 @@
   background-color: black;
 }
 
-@media screen and (min-width: 320px) and  (max-width:720px) {
+@media screen and (min-width: 320px) and  (max-width:767px) {
   .elements {
     display: flex;
     flex-direction: column;
