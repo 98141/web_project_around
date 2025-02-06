@@ -70,6 +70,30 @@
   transform: scale(1.5);
 }
 
+/*popup*/
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.imagen-popup {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.imagen.activa {
+  opacity: 0.3;
+}
+
+
 
 @media screen and (min-width: 768px) and  (max-width:1023px) {
   .elements {

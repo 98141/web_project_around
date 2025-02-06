@@ -114,3 +114,37 @@ newImagen.addEventListener("saveButton", (event) => {
   // Limpiar el formulario
   newImagen.reset();
 });
+
+//popup
+// Obtener los elementos
+const imagenes = document.querySelectorAll('.element__img');
+const popup = document.getElementById('popup');
+const imagenPopup = document.getElementById('imagenPopup');
+
+// Agregar el evento click a todas las imágenes
+imagenes.forEach(imagen => {
+  imagen.addEventListener('click', function() {
+    // Cambiar la imagen en el popup
+    imagenPopup.src = imagen.src;
+
+    // Mostrar el popup
+    popup.style.display = 'flex';
+
+    // Hacer las demás imágenes opacas
+    imagenes.forEach(img => {
+      if (img !== imagen) {
+        img.classList.add('activa');
+      }
+    });
+  });
+});
+
+// Cerrar el popup cuando se hace clic fuera de la imagen ampliada
+popup.addEventListener('click', function(e) {
+  if (e.target === popup) {
+    popup.style.display = 'none';
+    imagenes.forEach(img => {
+      img.classList.remove('activa');
+    });
+  }
+});
