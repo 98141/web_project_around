@@ -37,14 +37,14 @@
               </h1>
               <a href="#"
                 ><img
-                  src="./images/Edit Button.png"
+                  src="./images/EditButton.png"
                   alt="Imagen de un botton de editar"
                   class="profile__info-button"
               /></a>
             </div>
             <h2 class="profile__info-function">Explorador</h2>
           </div>
-          <button class="profile__button">+</button>
+          <button id="profile__button" class="profile__button">+</button>
         </section>
         <!-- Modal para editar los datos -->
         <div class="modal" id="editModal">
@@ -71,6 +71,29 @@
         <section id="elements" class="elements">
 
         </section>
+        <!-- Modal para crear nuevas tarjetas -->
+         <div class="modal" id="nuevoLugar">
+          <div class="modal__content">
+            <span class="modal__close" id="closeButton">&times;</span>
+            <h2 class="modal__content-title">Nuevo lugar</h2>
+            <input
+              class="modal__content-input"
+              type="text"
+              id="titleInput"
+              placeholder="Titulo"
+            />
+            <input
+              class="modal__content-input"
+              type="text"
+              id="enlaceInput"
+              placeholder="Enlace a la imagen"
+            />
+            <div class="modal__actions">
+              <button id="saveButton">Crear</button>
+            </div>
+          </div>
+        </div>
+
       </main>
       <footer class="footer">
         <p class="footer__copyright">&#169; 2021 Around The U.S.</p>

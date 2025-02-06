@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.style.display = "none";
   });
 
-
   modal.addEventListener("click", (event) => {
     if (event.target === modal) {
       modal.style.display = "none";
@@ -37,24 +36,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //Agregar elementos
 const elementsData = [
-  { src: "./images/img_1.jpg", title: "Valle de Yosemite" },
-  { src: "./images/img_2.png", title: "Lago Louise" },
-  { src: "./images/img_3.png", title: "Montañas Calvas" },
-  { src: "./images/img_4.png", title: "Vanois National Park" },
-  { src: "./images/img_5.png", title: "Latemar" },
-  { src: "./images/img_6.png", title: "Lago di Braies" }
+  { src: "../images/img_1.jpg", title: "Valle de Yosemite" },
+  { src: "../images/img_2.png", title: "Lago Louise" },
+  { src: "../images/img_3.png", title: "Montañas Calvas" },
+  { src: "../images/img_4.png", title: "Vanois National Park" },
+  { src: "../images/img_5.png", title: "Latemar" },
+  { src: "../images/img_6.png", title: "Lago di Braies" },
 ];
 
 const elementsContainer = document.querySelector("#elements");
+const newImagen = document.querySelector("#nuevoLugar");
+const openButton = document.querySelector("#profile__button");
 
 // Función para crear un elemento y agregarlo al DOM
-function createElement ({src, title}) {
+function createElement({ src, title }) {
   const element = document.createElement("div");
   element.classList.add("element");
 
   const img = document.createElement("img");
   img.src = src;
+  img.alt = `Imagen de ${title}`;
   img.classList.add("element__img");
+
+  const deleteButton = document.createElement("button");
+  deleteButton.classList.add("element__delete");
+  deleteButton.textContent = "🗑️";
+  deleteButton.addEventListener("click", () => {
+    element.remove();
+  });
 
   const elementItem = document.createElement("div");
   elementItem.classList.add("element__item");
@@ -65,18 +74,43 @@ function createElement ({src, title}) {
 
   const heart = document.createElement("div");
   heart.classList.add("element__item-heart");
+  heart.addEventListener("click", function (event) {
+    event.target.classList.toggle("element__item-heart_active");
+  });
 
   // Agregamos los elementos al contenedor
   elementItem.appendChild(titleElement);
   elementItem.appendChild(heart);
+  element.appendChild(deleteButton);
   element.appendChild(img);
   element.appendChild(elementItem);
 
   return element;
 }
 
+//Activar el formulario
+openButton.addEventListener("click", function () {
+  newImagen.style.display = "block";
+});
 // Iteramos sobre los datos y agregamos los elementos al DOM
-elementsData.forEach(data => {
+elementsData.forEach((data) => {
   const newElement = createElement(data);
   elementsContainer.appendChild(newElement);
+});
+
+// Evento para agregar nuevas imágenes desde el formulario
+newImagen.addEventListener("saveButton", (event) => {
+  event.preventDefault();
+
+  const imageTitle = document.querySelector("titleInput").value;
+  const imageURL = document.querySelector("enlaceInput").value;
+
+  if (imageTitle && imageURL) {
+    const newCard = { title: imageTitle, src: imageURL };
+    const newElement = createElement(newCard);
+    elementsContainer.prepend(newElement); // Agregar al inicio de la lista
+  }
+
+  // Limpiar el formulario
+  newImagen.reset();
 });
