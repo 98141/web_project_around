@@ -48,36 +48,37 @@
         </section>
         <!-- Modal para editar los datos -->
         <form name="form" novalidate>
-          <div class="modal" id="editModal">
-            <div class="modal__content">
-              <span class="modal__close" id="closeButton">&times;</span>
-              <h2 class="modal__content-title">Editar Perfil</h2>
-              <input
-                class="modal__content-input"
-                type="text"
-                id="nameInput"
-                placeholder="Nombre"
-                minlength="2"
-                maxlength="40"
-                required
-              />
-              <span class="nameInput-error "></span>
-              <input
-                class="modal__content-input"
-                type="text"
-                id="functionInput"
-                placeholder="Acerca de mi"
-                minlength="2"
-                maxlength="200"
-                required
-              />
-              <span class="nameInput-error "></span>
-              <div class="modal__actions">
-                <button id="saveButton">Guardar</button>
-              </div>
+        <div class="modal" id="editModal">
+          <div class="modal__content">
+            <span class="modal__close" id="closeButton">&times;</span>
+            <h2 class="modal__content-title">Editar Perfil</h2>
+            <input
+              class="modal__content-input form__input"
+              type="text"
+              id="nameInput"
+              placeholder="Nombre"
+              minlength="2"
+              maxlength="40"
+              required
+            />
+            <span id="nameInput-error" class="form__input-error"></span>
+            <input
+              class="modal__content-input form__input"
+              type="text"
+              id="functionInput"
+              placeholder="Acerca de mi"
+              minlength="4"
+              maxlength="200"
+              required
+            />
+            <span id="functionInput-error" class="form__input-error"></span>
+
+            <div class="modal__actions">
+              <button id="saveButton" class="form__submit button_inactive" type="button" disabled>Guardar</button>
             </div>
           </div>
-        </form>
+        </div>
+      </form>
         <section id="elements" class="elements"></section>
         <div class="popup" id="popup">
           <img
@@ -89,25 +90,32 @@
           <p class="popup__paragraph" id="popup__paragraph"></p>
         </div>
         <!-- Modal para crear nuevas tarjetas -->
-        <form name="add" novalidate>
+        <form name="form" novalidate>
           <div class="modal" id="nuevoLugar">
             <div class="modal__content">
               <span class="modal__close" id="closeButtonImg">&times;</span>
-              <h2 class="modal__content-title">Editar Perfil</h2>
+              <h2 class="modal__content-title">Nuevo Lugar</h2>
               <input
-                class="modal__content-input"
+                class="modal__content-input form__input"
                 type="text"
                 id="nameImg"
                 placeholder="Nombre de la Imagen"
+                minlength="2"
+                maxlength="30"
+                required
               />
+              <span id="nameImg-error" class="form__input-error"></span>
               <input
-                class="modal__content-input"
+                class="modal__content-input form__input"
                 type="url"
                 id="linkImg"
                 placeholder="Link de la URL"
+                required
               />
+              <span id="linkImg-error" class="form__input-error"></span>
+
               <div class="modal__actions">
-                <button id="saveButtonImg">Crear</button>
+                <button id="saveButtonImg" class="form__submit button_inactive" type="button" disabled>Crear</button>
               </div>
             </div>
           </div>

@@ -61,7 +61,7 @@
   color: #000000;
 }
 
-.modal__actions button {
+.form__submit {
   width: 358px;
   height: 50.15px;
   top: 438.34px;
@@ -80,7 +80,28 @@
   margin: 29.74px 0 36.51px;
 }
 
-.modal__actions:hover button {
+.button_inactive {
+  width: 358px;
+  height: 50.15px;
+  top: 438.34px;
+  left: 461px;
+  gap: 0px;
+  border-radius: 2px 0px 0px 0px solid #FFFFFF;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+  box-shadow: 0px 0px 25px 0px #00000026;
+  background: #000000;
+  color: white;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21.78px;
+  margin: 29.74px 0 36.51px;
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.form__submit:hover {
   opacity: 0.5;
 }
 
@@ -91,6 +112,20 @@
 
 .modal__content-input:valid {
   border-bottom: 1px solid green; /* y el borde verde es para entradas válidas */
+}
+
+.form__input_type_error {
+  border-color: red;
+}
+
+.form__input-error {
+  color: red;
+  font-size: 12px;
+  display: none;
+}
+
+.form__input-error_active {
+  display: block;
 }
 
 @media screen and (min-width: 768px) and  (max-width:1023px) {
