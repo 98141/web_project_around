@@ -84,6 +84,15 @@
   opacity: 0.5;
 }
 
+/*prueba de los formularios*/
+.modal__content-input:invalid {
+  border-bottom: 1px solid red; /* el borde rojo es para entradas no válidas */
+}
+
+.modal__content-input:valid {
+  border-bottom: 1px solid green; /* y el borde verde es para entradas válidas */
+}
+
 @media screen and (min-width: 768px) and  (max-width:1023px) {
 
 }

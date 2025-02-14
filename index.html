@@ -47,57 +47,71 @@
           <button id="profile__button" class="profile__button">+</button>
         </section>
         <!-- Modal para editar los datos -->
-        <div class="modal" id="editModal">
-          <div class="modal__content">
-            <span class="modal__close" id="closeButton">&times;</span>
-            <h2 class="modal__content-title">Editar Perfil</h2>
-            <input
-              class="modal__content-input"
-              type="text"
-              id="nameInput"
-              placeholder="Nombre"
-            />
-            <input
-              class="modal__content-input"
-              type="text"
-              id="functionInput"
-              placeholder="Acerca de mi"
-            />
-            <div class="modal__actions">
-              <button id="saveButton">Guardar</button>
+        <form name="form" novalidate>
+          <div class="modal" id="editModal">
+            <div class="modal__content">
+              <span class="modal__close" id="closeButton">&times;</span>
+              <h2 class="modal__content-title">Editar Perfil</h2>
+              <input
+                class="modal__content-input"
+                type="text"
+                id="nameInput"
+                placeholder="Nombre"
+                minlength="2"
+                maxlength="40"
+                required
+              />
+              <span class="nameInput-error "></span>
+              <input
+                class="modal__content-input"
+                type="text"
+                id="functionInput"
+                placeholder="Acerca de mi"
+                minlength="2"
+                maxlength="200"
+                required
+              />
+              <span class="nameInput-error "></span>
+              <div class="modal__actions">
+                <button id="saveButton">Guardar</button>
+              </div>
             </div>
           </div>
-        </div>
-        <section id="elements" class="elements">
-
-        </section>
+        </form>
+        <section id="elements" class="elements"></section>
         <div class="popup" id="popup">
-          <img src="" alt="Imagen Ampliada" class="imagen-popup" id="imagenPopup">
+          <img
+            src=""
+            alt="Imagen Ampliada"
+            class="imagen-popup"
+            id="imagenPopup"
+          />
           <p class="popup__paragraph" id="popup__paragraph"></p>
         </div>
         <!-- Modal para crear nuevas tarjetas -->
-        <div class="modal" id="nuevoLugar">
-          <div class="modal__content">
-            <span class="modal__close" id="closeButtonImg">&times;</span>
-            <h2 class="modal__content-title">Editar Perfil</h2>
-            <input
-              class="modal__content-input"
-              type="text"
-              id="nameImg"
-              placeholder="Nombre de la Imagen"
-            />
-            <input
-              class="modal__content-input"
-              type="text"
-              id="linkImg"
-              placeholder="Link de la URL"
-            />
-            <div class="modal__actions">
-              <button id="saveButtonImg">Crear</button>
+        <form name="add" novalidate>
+          <div class="modal" id="nuevoLugar">
+            <div class="modal__content">
+              <span class="modal__close" id="closeButtonImg">&times;</span>
+              <h2 class="modal__content-title">Editar Perfil</h2>
+              <input
+                class="modal__content-input"
+                type="text"
+                id="nameImg"
+                placeholder="Nombre de la Imagen"
+              />
+              <input
+                class="modal__content-input"
+                type="url"
+                id="linkImg"
+                placeholder="Link de la URL"
+              />
+              <div class="modal__actions">
+                <button id="saveButtonImg">Crear</button>
+              </div>
             </div>
           </div>
-        </div>
-
+        </form>
       </main>
       <footer class="footer">
         <p class="footer__copyright">&#169; 2021 Around The U.S.</p>

@@ -22,6 +22,52 @@ document.addEventListener("DOMContentLoaded", () => {
   const imagenPopup = document.getElementById("imagenPopup");
   const popupParagraph = document.getElementById("popup__paragraph");
 
+  const form = document.querySelector("form");
+  const inputs = form.querySelectorAll("input[required]");
+
+  // Función para validar un input genérico
+  function validateInput(input) {
+    const minLength = input.getAttribute("minlength");
+    const maxLength = input.getAttribute("maxlength");
+    const value = input.value.trim();
+    const errorSpan = document.querySelector(`.${input.id}-error`);
+
+    if (value.length < minLength) {
+      errorSpan.textContent = `Debe tener al menos ${minLength} caracteres`;
+      return false;
+    } else if (value.length > maxLength) {
+      errorSpan.textContent = `No puede superar ${maxLength} caracteres`;
+      return false;
+    } else {
+      errorSpan.textContent = "";
+      return true;
+    }
+  }
+
+  // Función para verificar si todos los inputs son válidos
+  function updateButtonState() {
+    const allValid = Array.from(inputs).every(input => validateInput(input));
+    saveButton.disabled = !allValid;
+  }
+
+  // Agregar eventos a todos los inputs
+  inputs.forEach(input => {
+    input.addEventListener("input", updateButtonState);
+  });
+
+  // Evitar el envío si hay errores
+  saveButton.addEventListener("click", function (event) {
+    if (saveButton.disabled) {
+      event.preventDefault();
+    } else {
+      alert("Formulario válido. Guardando cambios...");
+      form.submit();
+    }
+  });
+
+  // Deshabilitar el botón al inicio
+  saveButton.disabled = true;
+
   const elementsData = [
     {
       src: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/yosemite.jpg",
@@ -48,6 +94,14 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "Lago di Braies",
     },
   ];
+
+  function closeOnEsc(event) {
+    if (event.key === "Escape") {
+      closePopup();
+      closeEditModal();
+      closeEditModalImg();
+    }
+  }
 
   // Función para abrir el modal de edición de perfil
   function openEditModal() {
@@ -158,6 +212,9 @@ document.addEventListener("DOMContentLoaded", () => {
     closeButton.addEventListener("click", closePopup);
 
     popup.appendChild(closeButton);
+
+    // Agregar evento para cerrar con Esc
+    document.addEventListener("keydown", closeOnEsc);
   }
 
   // Función para cerrar el popup
@@ -176,6 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
   closeButtonImg.addEventListener("click", closeEditModalImg);
   saveButtonImg.addEventListener("click", handleSaveImageForm);
   openButton.addEventListener("click", showImageForm);
+
 
   // Agregar imágenes al DOM
   elementsData.forEach((data) => {
@@ -196,6 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
       closePopup();
     }
   });
+
   //cerrar el modal
   modal.addEventListener("click", (event) => {
     if (event.target === modal) {
@@ -208,4 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
       newImagen.style.display = "none";
     }
   });
+
+  document.addEventListener("keydown", closeOnEsc);
 });
+
