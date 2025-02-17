@@ -74,7 +74,7 @@ export const resetValidation = (formElement) => {
 
 enableValidation();
 
-/*Validacion de imagenes*/
+/*Validacion de imagenes del formulario*/
 const showInputErrorImg = (formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.add("form__input_type_error");
