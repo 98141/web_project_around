@@ -1,3 +1,5 @@
+import { resetValidation } from "./validate.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   // Elementos del DOM
   const editButton = document.querySelector(".profile__info-button");
@@ -74,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Función para cerrar el modal sin guardar cambios
   function closeEditModal() {
     modal.style.display = "none";
+    resetValidation(modal);
   }
 
   // Función para crear un nuevo elemento con imagen y título
@@ -137,11 +140,12 @@ document.addEventListener("DOMContentLoaded", () => {
       newImagen.style.display = "none";
     }
     // Función para cerrar el modal sin guardar cambios
-    newImagen.reset();
+    //newImagen.reset();
   }
 
   function closeEditModalImg() {
     newImagen.style.display = "none";
+    resetValidation(newImagen);
   }
 
   // Función para mostrar el popup con imagen ampliada
@@ -188,7 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
   saveButtonImg.addEventListener("click", handleSaveImageForm);
   openButton.addEventListener("click", showImageForm);
 
-
   // Agregar imágenes al DOM
   elementsData.forEach((data) => {
     const newElement = createElement(data);
@@ -223,132 +226,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("keydown", closeOnEsc);
-
-  /*validadicon perfil*/
-  const showInputError = (formElement, inputElement, errorMessage) => {
-    const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-    inputElement.classList.add("form__input_type_error");
-    errorElement.textContent = errorMessage;
-    errorElement.classList.add("form__input-error_active");
-};
-
-const hideInputError = (formElement, inputElement) => {
-    const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-    inputElement.classList.remove("form__input_type_error");
-    errorElement.classList.remove("form__input-error_active");
-    errorElement.textContent = "";
-};
-
-const checkInputValidity = (formElement, inputElement) => {
-    if (!inputElement.validity.valid) {
-        showInputError(formElement, inputElement, inputElement.validationMessage);
-    } else {
-        hideInputError(formElement, inputElement);
-    }
-};
-
-const hasInvalidInput = (inputList) => {
-    return inputList.some((inputElement) => {
-        return !inputElement.validity.valid;
-    });
-};
-
-const toggleButtonState = (inputList, buttonElement) => {
-    if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add("button_inactive");
-        buttonElement.disabled = true;
-    } else {
-        buttonElement.classList.remove("button_inactive");
-        buttonElement.disabled = false;
-    }
-};
-
-const setEventListeners = (formElement) => {
-    const inputList = Array.from(formElement.querySelectorAll(".form__input"));
-    const buttonElement = formElement.querySelector(".form__submit");
-
-    toggleButtonState(inputList, buttonElement);
-
-    inputList.forEach((inputElement) => {
-        inputElement.addEventListener("input", function () {
-            checkInputValidity(formElement, inputElement);
-            toggleButtonState(inputList, buttonElement);
-        });
-    });
-};
-
-const enableValidation = () => {
-    const formElement = document.querySelector('form[name="form"]');
-    formElement.addEventListener("submit", function (evt) {
-        evt.preventDefault();
-    });
-
-    setEventListeners(formElement);
-};
-
-enableValidation();
-
-/*Validacion de imagenes*/
-const showInputErrorImg = (formElement, inputElement, errorMessage) => {
-  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  inputElement.classList.add("form__input_type_error");
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add("form__input-error_active");
-};
-
-const hideInputErrorImg = (formElement, inputElement) => {
-  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  inputElement.classList.remove("form__input_type_error");
-  errorElement.classList.remove("form__input-error_active");
-  errorElement.textContent = "";
-};
-
-const checkInputValidityImg = (formElement, inputElement) => {
-  if (!inputElement.validity.valid) {
-    showInputErrorImg(formElement, inputElement, inputElement.validationMessage);
-  } else {
-    hideInputErrorImg(formElement, inputElement);
-  }
-};
-
-const hasInvalidInputImg = (inputList) => {
-  return inputList.some((inputElement) => {
-      return !inputElement.validity.valid;
-  });
-};
-
-const toggleButtonStateImg = (inputList, buttonElement) => {
-  if (hasInvalidInputImg(inputList)) {
-      buttonElement.classList.add("button_inactive");
-  } else {
-      buttonElement.classList.remove("button_inactive");
-      buttonElement.disabled = false;
-  }
-};
-
-const setEventListenersImg = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll(".form__input-img"));
-  const buttonElement = formElement.querySelector(".form__submit");
-
-  toggleButtonStateImg(inputList, buttonElement);
-
-  inputList.forEach((inputElement) => {
-      inputElement.addEventListener("input", function () {
-        checkInputValidityImg(formElement, inputElement);
-          toggleButtonStateImg(inputList, buttonElement);
-      });
-  });
-};
-
-const enableValidationImg = () => {
-  const formElement = document.querySelector('form[name="formImg"]');
-  formElement.addEventListener("submit", function (evt) {
-      evt.preventDefault();
-  });
-
-  setEventListenersImg(formElement);
-};
-
-enableValidationImg();
-
 });
