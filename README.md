@@ -11,3 +11,5 @@ La pagina web del proyecto around US es el septimo proyecto en el programa de De
 sprint 8: Agregar nuevas imagenes 
 
 Sprint 9: validacion de formularios y salida de la ventana emergente con ESC y click fuera
+
+sprint 10: POO
