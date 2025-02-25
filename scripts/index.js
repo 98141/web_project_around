@@ -1,4 +1,4 @@
-import { resetValidation } from "./validate.js";
+import { resetValidation } from "./formValidator.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Elementos del DOM
