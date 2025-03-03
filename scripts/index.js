@@ -1,4 +1,6 @@
 import { resetValidation } from "./formValidator.js";
+import card from "./card.js";
+import { elementsData } from "./cardInitial.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Elementos del DOM
@@ -23,33 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const popup = document.getElementById("popup");
   const imagenPopup = document.getElementById("imagenPopup");
   const popupParagraph = document.getElementById("popup__paragraph");
-
-  const elementsData = [
-    {
-      src: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/yosemite.jpg",
-      title: "Valle de Yosemite",
-    },
-    {
-      src: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lake-louise.jpg",
-      title: "Lago Louise",
-    },
-    {
-      src: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/bald-mountains.jpg",
-      title: "Montañas Calvas",
-    },
-    {
-      src: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/vanoise.jpg",
-      title: "Vanois National Park",
-    },
-    {
-      src: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/latemar.jpg",
-      title: "Latemar",
-    },
-    {
-      src: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lago.jpg",
-      title: "Lago di Braies",
-    },
-  ];
 
   function closeOnEsc(event) {
     if (event.key === "Escape") {
@@ -79,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resetValidation(modal);
   }
 
-  // Función para crear un nuevo elemento con imagen y título
+  /* Función para crear un nuevo elemento con imagen y título
   function createElement({ src, title }) {
     const element = document.createElement("div");
     element.classList.add("element");
@@ -117,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     element.appendChild(elementItem);
 
     return element;
-  }
+  }*/
 
   // Función para mostrar el formulario de nueva imagen
   function showImageForm() {
@@ -133,14 +108,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (imageTitle && imageURL) {
       const newCard = { title: imageTitle, src: imageURL };
-      const newElement = createElement(newCard);
+      const newElement = new card(newCard);
       elementsContainer.prepend(newElement); // Agregar al inicio
       nameImg.value = "";
       linkImg.value = "";
       newImagen.style.display = "none";
     }
-    // Función para cerrar el modal sin guardar cambios
-    //newImagen.reset();
   }
 
   function closeEditModalImg() {
@@ -164,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Crear el botón de cerrar
-    const closeButton = document.createElement("div");
+    const closeButton = document.card("div");
     closeButton.classList.add("popup__close");
     closeButton.textContent = "✖";
     closeButton.addEventListener("click", closePopup);
@@ -194,8 +167,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Agregar imágenes al DOM
   elementsData.forEach((data) => {
-    const newElement = createElement(data);
-    elementsContainer.appendChild(newElement);
+    const newCard = new card(data, 'templateSelector', 'handlerCardClick');  // Crear una instancia de la clase card
+    const element = newCard.createElement({ src: data.src, title: data.title }); // Usar el método createElement para obtener el nodo DOM
+    elementsContainer.appendChild(element); // Agregar el nodo al contenedor
   });
 
   // Delegación de eventos para las imágenes

@@ -1,19 +1,19 @@
 /*validadicon perfil*/
-export const showInputError = (formElement, inputElement, errorMessage) => {
+const showInputError = (formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.add("form__input_type_error");
   errorElement.textContent = errorMessage;
   errorElement.classList.add("form__input-error_active");
 };
 
-export const hideInputError = (formElement, inputElement) => {
+const hideInputError = (formElement, inputElement) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.remove("form__input_type_error");
   errorElement.classList.remove("form__input-error_active");
   errorElement.textContent = "";
 };
 
-export const checkInputValidity = (formElement, inputElement) => {
+const checkInputValidity = (formElement, inputElement) => {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
@@ -51,7 +51,7 @@ const setEventListeners = (formElement) => {
   });
 };
 
-export const enableValidation = () => {
+const enableValidation = () => {
   const formElement = document.querySelector('form[name="form"]');
   formElement.addEventListener("submit", function (evt) {
     evt.preventDefault();
