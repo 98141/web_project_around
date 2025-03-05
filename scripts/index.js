@@ -1,6 +1,6 @@
 import { resetValidation } from "./formValidator.js";
-import card from "./card.js";
-import { elementsData } from "./cardInitial.js";
+import Card from "./card.js";
+import { ElementsData } from "./cardInitial.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Elementos del DOM
@@ -54,68 +54,29 @@ document.addEventListener("DOMContentLoaded", () => {
     resetValidation(modal);
   }
 
-  /* Función para crear un nuevo elemento con imagen y título
-  function createElement({ src, title }) {
-    const element = document.createElement("div");
-    element.classList.add("element");
-
-    const img = document.createElement("img");
-    img.src = src;
-    img.alt = `Imagen de ${title}`;
-    img.classList.add("element__img");
-    img.setAttribute("data-title", title);
-
-    const deleteButton = document.createElement("button");
-    deleteButton.classList.add("element__delete");
-    deleteButton.textContent = "🗑️";
-    deleteButton.addEventListener("click", () => {
-      element.remove();
-    });
-
-    const elementItem = document.createElement("div");
-    elementItem.classList.add("element__item");
-
-    const titleElement = document.createElement("h2");
-    titleElement.classList.add("element__item-title");
-    titleElement.textContent = title;
-
-    const heart = document.createElement("div");
-    heart.classList.add("element__item-heart");
-    heart.addEventListener("click", () => {
-      heart.classList.toggle("element__item-heart_active");
-    });
-
-    elementItem.appendChild(titleElement);
-    elementItem.appendChild(heart);
-    element.appendChild(deleteButton);
-    element.appendChild(img);
-    element.appendChild(elementItem);
-
-    return element;
-  }*/
-
   // Función para mostrar el formulario de nueva imagen
   function showImageForm() {
     newImagen.style.display = "flex";
   }
 
   // Función para manejar el evento de agregar una nueva imagen
-  function handleSaveImageForm(event) {
-    event.preventDefault();
+  function handleSaveImageForm(data) {
+    data.preventDefault();
 
     const imageTitle = nameImg.value;
     const imageURL = linkImg.value;
 
     if (imageTitle && imageURL) {
       const newCard = { title: imageTitle, src: imageURL };
-      const newElement = new card(newCard);
-      elementsContainer.prepend(newElement); // Agregar al inicio
+      const newElement = new Card(newCard);
+      elementsContainer.prepend(newElement.createElement(newCard)); // Agregar al inicio
       nameImg.value = "";
       linkImg.value = "";
       newImagen.style.display = "none";
     }
   }
 
+  // Función para cerrar el evento sin guardar cambios
   function closeEditModalImg() {
     newImagen.style.display = "none";
     resetValidation(newImagen);
@@ -157,17 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Asignar eventos
-  editButton.addEventListener("click", openEditModal);
-  saveButton.addEventListener("click", saveProfile);
-  closeButton.addEventListener("click", closeEditModal);
-  closeButtonImg.addEventListener("click", closeEditModalImg);
-  saveButtonImg.addEventListener("click", handleSaveImageForm);
-  openButton.addEventListener("click", showImageForm);
-
   // Agregar imágenes al DOM
-  elementsData.forEach((data) => {
-    const newCard = new card(data, 'templateSelector', 'handlerCardClick');  // Crear una instancia de la clase card
+  ElementsData.forEach((data) => {
+    const newCard = new Card(data);
     const element = newCard.createElement({ src: data.src, title: data.title }); // Usar el método createElement para obtener el nodo DOM
     elementsContainer.appendChild(element); // Agregar el nodo al contenedor
   });
@@ -178,6 +131,15 @@ document.addEventListener("DOMContentLoaded", () => {
       showPopup(event);
     }
   });
+
+  // Asignar eventos
+  editButton.addEventListener("click", openEditModal);
+  saveButton.addEventListener("click", saveProfile);
+  closeButton.addEventListener("click", closeEditModal);
+  closeButtonImg.addEventListener("click", closeEditModalImg);
+  saveButtonImg.addEventListener("click", handleSaveImageForm);
+  openButton.addEventListener("click", showImageForm);
+
 
   // Cerrar el popup al hacer clic fuera de la imagen
   popup.addEventListener("click", (event) => {
@@ -200,4 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("keydown", closeOnEsc);
+
+
 });
