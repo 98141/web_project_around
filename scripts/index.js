@@ -1,6 +1,6 @@
-import { resetValidation } from "./formValidator.js";
 import Card from "./card.js";
 import { ElementsData } from "./cardInitial.js";
+import FormValidator from "./formValidator.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Elementos del DOM
@@ -34,8 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+    const formValidatormodal = new FormValidator(modal, nameInput);
+
   // Función para abrir el modal de edición de perfil
   function openEditModal() {
+    formValidatormodal.enableValidation();
     nameInput.value = nameElement.textContent;
     functionInput.value = functionElement.textContent;
     modal.style.display = "flex";
@@ -54,19 +57,23 @@ document.addEventListener("DOMContentLoaded", () => {
     resetValidation(modal);
   }
 
+  const formValidatorImg = new FormValidator(newImagen,nameImg);
+
   // Función para mostrar el formulario de nueva imagen
   function showImageForm() {
     newImagen.style.display = "flex";
+    formValidatorImg.enableValidation();
   }
 
   // Función para manejar el evento de agregar una nueva imagen
-  function handleSaveImageForm(data) {
-    data.preventDefault();
+  function handleSaveImageForm(event) {
+    event.preventDefault();
 
     const imageTitle = nameImg.value;
     const imageURL = linkImg.value;
 
-    if (imageTitle && imageURL) {
+
+    if (imageTitle && imageURL ) {
       const newCard = { title: imageTitle, src: imageURL };
       const newElement = new Card(newCard);
       elementsContainer.prepend(newElement.createElement(newCard)); // Agregar al inicio
@@ -76,7 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Función para cerrar el evento sin guardar cambios
   function closeEditModalImg() {
     newImagen.style.display = "none";
     resetValidation(newImagen);
@@ -98,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Crear el botón de cerrar
-    const closeButton = document.card("div");
+    const closeButton = document.Card("div");
     closeButton.classList.add("popup__close");
     closeButton.textContent = "✖";
     closeButton.addEventListener("click", closePopup);
@@ -140,7 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
   saveButtonImg.addEventListener("click", handleSaveImageForm);
   openButton.addEventListener("click", showImageForm);
 
-
   // Cerrar el popup al hacer clic fuera de la imagen
   popup.addEventListener("click", (event) => {
     if (event.target === popup) {
@@ -162,6 +167,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("keydown", closeOnEsc);
-
-
 });
