@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-    const formValidatormodal = new FormValidator(modal, nameInput);
+  const formValidatormodal = new FormValidator(modal, nameInput, functionInput);
 
   // Función para abrir el modal de edición de perfil
   function openEditModal() {
@@ -54,15 +54,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // Función para cerrar el modal sin guardar cambios
   function closeEditModal() {
     modal.style.display = "none";
-    resetValidation(modal);
+    formValidatormodal(modal);
   }
 
-  const formValidatorImg = new FormValidator(newImagen,nameImg);
+  const formValidatorImg = new FormValidator(newImagen, nameImg, linkImg);
 
   // Función para mostrar el formulario de nueva imagen
   function showImageForm() {
-    newImagen.style.display = "flex";
     formValidatorImg.enableValidation();
+    newImagen.style.display = "flex";
+
   }
 
   // Función para manejar el evento de agregar una nueva imagen
@@ -85,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function closeEditModalImg() {
     newImagen.style.display = "none";
-    resetValidation(newImagen);
+    formValidatorImg(newImagen);
   }
 
   // Función para mostrar el popup con imagen ampliada
