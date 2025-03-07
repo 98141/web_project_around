@@ -50,10 +50,10 @@
 .modal__content-input {
   width: 358px;
   height: 27.26px;
-  margin-bottom: 29.74px;
+  margin-bottom: 15px;
   border: none;
   border-bottom: 1px solid #000000;
-  opacity: 20%;
+  opacity: 50%;
   font-size: 14px;
   line-height: 16.94px;
   font-weight: 400;
@@ -96,7 +96,7 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 21.78px;
-  margin: 29.74px 0 36.51px;
+  margin: 20px 0 36.51px;
   background-color: grey;
   cursor: not-allowed;
 }
@@ -121,7 +121,10 @@
 .form__input-error {
   color: red;
   font-size: 12px;
+  padding: 0 0 10px 10px;
+  height: 15px;
   display: none;
+  background-color: green;
 }
 
 .form__input-error_active {
@@ -147,13 +150,13 @@
   }
 
   .modal__content-title  {
-    padding: 25px 22px 76px;
+    padding: 25px 22px 50px;
   }
 
   .modal__content-input {
     width: 238px;
     height: 26px;
-    margin: 0 22px 30px;
+    margin: 0 22px 10px;
   }
 
   .modal__actions {
@@ -163,7 +166,9 @@
   .modal__actions button {
     width: 238px;
     height: 46px;
-    margin: 0;
     margin: 0 22px;
   }
+
+
+
 }
