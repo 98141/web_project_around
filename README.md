@@ -12,4 +12,5 @@ sprint 8: Agregar nuevas imagenes
 
 Sprint 9: validacion de formularios y salida de la ventana emergente con ESC y click fuera
 
-sprint 10: POO
+sprint 10: POO, creando clases de validacion de formularios y de tarjeta 
+
