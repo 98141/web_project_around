@@ -1,6 +1,8 @@
 import Card from "./card.js";
 import { ElementsData } from "./cardInitial.js";
 import FormValidator from "./formValidator.js";
+import showPopup from "./utils.js";
+import { closePopup } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Elementos del DOM
@@ -21,10 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const linkImg = document.getElementById("linkImg");
   const saveButtonImg = document.getElementById("saveButtonImg");
   const openButton = document.querySelector("#profile__button");
-  const imagenes = document.querySelectorAll(".element__img");
-  const popup = document.getElementById("popup");
-  const imagenPopup = document.getElementById("imagenPopup");
-  const popupParagraph = document.getElementById("popup__paragraph");
 
   function closeOnEsc(event) {
     if (event.key === "Escape") {
@@ -86,42 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
     //formValidatorImg(newImagen);
   }
 
-  // Función para mostrar el popup con imagen ampliada
-  function showPopup(event) {
-    const img = event.target;
-    imagenPopup.src = img.src;
-    popupParagraph.textContent = img.getAttribute("data-title");
-    popup.style.display = "flex";
-    popupParagraph.style.display = "flex";
-
-    // Hacer las demás imágenes opacas
-    imagenes.forEach((otherImg) => {
-      if (otherImg !== img) {
-        otherImg.classList.add("activa");
-      }
-    });
-
-    // Crear el botón de cerrar
-    const closeButton = document.Card("div");
-    closeButton.classList.add("popup__close");
-    closeButton.textContent = "✖";
-    closeButton.addEventListener("click", closePopup);
-
-    popup.appendChild(closeButton);
-
-    // Agregar evento para cerrar con Esc
-    document.addEventListener("keydown", closeOnEsc);
-  }
-
-  // Función para cerrar el popup
-  function closePopup() {
-    popup.style.display = "none";
-    popupParagraph.style.display = "none";
-    imagenes.forEach((img) => {
-      img.classList.remove("activa");
-    });
-  }
-
   // Agregar imágenes al DOM
   ElementsData.forEach((data) => {
     const newCard = new Card(data);
@@ -133,21 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
   elementsContainer.addEventListener("click", (event) => {
     if (event.target.classList.contains("element__img")) {
       showPopup(event);
-    }
-  });
-
-  // Asignar eventos
-  editButton.addEventListener("click", openEditModal);
-  saveButton.addEventListener("click", saveProfile);
-  closeButton.addEventListener("click", closeEditModal);
-  closeButtonImg.addEventListener("click", closeEditModalImg);
-  saveButtonImg.addEventListener("click", handleSaveImageForm);
-  openButton.addEventListener("click", showImageForm);
-
-  // Cerrar el popup al hacer clic fuera de la imagen
-  popup.addEventListener("click", (event) => {
-    if (event.target === popup) {
-      closePopup();
     }
   });
 
@@ -163,6 +110,14 @@ document.addEventListener("DOMContentLoaded", () => {
       newImagen.style.display = "none";
     }
   });
+
+  // Asignar eventos
+  editButton.addEventListener("click", openEditModal);
+  saveButton.addEventListener("click", saveProfile);
+  closeButton.addEventListener("click", closeEditModal);
+  closeButtonImg.addEventListener("click", closeEditModalImg);
+  saveButtonImg.addEventListener("click", handleSaveImageForm);
+  openButton.addEventListener("click", showImageForm);
 
   document.addEventListener("keydown", closeOnEsc);
 });
