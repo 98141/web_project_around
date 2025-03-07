@@ -1,43 +1,29 @@
 export default class FormValidator {
-  constructor(formElement, inputElement, contentElement) {
+  constructor(formElement) {
     this.formElement = formElement;
-    this.inputElement = inputElement;
-    this.contentElement = contentElement
   }
 
-  showInputError(errorMessages, errorMessagesContent) {
-    const errorElement = this.formElement.querySelector(`#${this.inputElement.id}-error`);
-    this.inputElement.classList.add("form__input_type_error");
-    errorElement.textContent = errorMessages; // contiene el elemento de error
+  showInputError(inputElement, errorMessages) {
+    const errorElement = this.formElement.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.add("form__input_type_error");
+    errorElement.textContent = errorMessages;
     errorElement.classList.add("form__input-error_active");
-
-    const errorContent = this.formElement.querySelector(`#${this.contentElement.id}-error`);
-    this.contentElement.classList.add("form__input_type_error");
-    errorContent.textContent = errorMessagesContent; // contiene el elemento de error
-    errorContent.classList.add("form__input-error_active");
   }
 
-  hideInputError() {
-    const errorElement = this.formElement.querySelector(`#${this.inputElement.id}-error`);
-    this.inputElement.classList.remove("form__input_type_error");
+  hideInputError(inputElement) {
+    const errorElement = this.formElement.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.remove("form__input_type_error");
     errorElement.classList.remove("form__input-error_active");
     errorElement.textContent = "";
-
-    const errorContent = this.formElement.querySelector(`#${this.contentElement.id}-error`);
-    this.inputElement.classList.remove("form__input_type_error");
-    errorContent.classList.remove("form__input-error_active");
-    errorContent.textContent = "";
   }
 
-  checkInputValidity(errorMessages) {
-    const validityState = this.inputElement.validity;
+  checkInputValidity(inputElement) {
+    const validityState = inputElement.validity;
 
-    if (validityState.valueMissing) {
-      this.showInputError(errorMessages.required);
-    } else if (validityState.tooLong) {
-      this.showInputError(`El máximo permitido son ${this.inputElement.maxLength} caracteres`);
-    } else {
-      this.hideInputError();
+    if(validityState.valid) {
+      this.hideInputError(inputElement);
+    }else{
+      this.showInputError(inputElement, inputElement.validationMessage);
     }
   }
 
@@ -65,7 +51,7 @@ export default class FormValidator {
 
     inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
-        this.checkInputValidity();
+        this.checkInputValidity(inputElement);
         this.toggleButtonState(inputList, buttonElement);
       });
     });

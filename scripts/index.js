@@ -34,11 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  const formValidatormodal = new FormValidator(modal, nameInput, functionInput);
+  const formValidatormodal = new FormValidator(modal);
+  formValidatormodal.enableValidation();
 
   // Función para abrir el modal de edición de perfil
   function openEditModal() {
-    formValidatormodal.enableValidation();
     nameInput.value = nameElement.textContent;
     functionInput.value = functionElement.textContent;
     modal.style.display = "flex";
@@ -54,16 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Función para cerrar el modal sin guardar cambios
   function closeEditModal() {
     modal.style.display = "none";
-    formValidatormodal(modal);
   }
 
-  const formValidatorImg = new FormValidator(newImagen, nameImg, linkImg);
+  const formValidatorImg = new FormValidator(newImagen);
+  formValidatorImg.enableValidation();
 
   // Función para mostrar el formulario de nueva imagen
   function showImageForm() {
-    formValidatorImg.enableValidation();
     newImagen.style.display = "flex";
-
   }
 
   // Función para manejar el evento de agregar una nueva imagen
@@ -73,8 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const imageTitle = nameImg.value;
     const imageURL = linkImg.value;
 
-
-    if (imageTitle && imageURL ) {
+    if (imageTitle && imageURL) {
       const newCard = { title: imageTitle, src: imageURL };
       const newElement = new Card(newCard);
       elementsContainer.prepend(newElement.createElement(newCard)); // Agregar al inicio
@@ -86,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function closeEditModalImg() {
     newImagen.style.display = "none";
-    formValidatorImg(newImagen);
+    //formValidatorImg(newImagen);
   }
 
   // Función para mostrar el popup con imagen ampliada
