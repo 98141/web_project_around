@@ -1,4 +1,4 @@
-class ImagePopup {
+export default class ImagePopup {
   constructor() {
     // Accedemos a los elementos del DOM
     this.newImagen = document.getElementById('newImagen');
