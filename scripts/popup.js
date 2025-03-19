@@ -1,43 +1,43 @@
-export default class ImagePopup {
-  constructor() {
-    // Accedemos a los elementos del DOM
-    this.newImagen = document.getElementById('newImagen');
-    this.imagenPopup = document.getElementById('imagenPopup');
-    this.popupParagraph = document.getElementById('popupParagraph');
-    this.popup = document.getElementById('popup');
-    this.imagenes = document.querySelectorAll('.image'); // Asegúrate de que las imágenes tienen esta clase
+export class Popup {
+  constructor(popupSelector) {
+    this._popup = document.querySelector(popupSelector); // Selecciona el popup a partir del selector proporcionado
+    this.closeButton = this.popup.querySelector("popup__close"); // Selector para el botón de cerrar dentro del popup
+    this._handleEscClose = this._handleEscClose.bind(this); // Vinculamos el contexto de `this` al método privado
   }
 
-  // Método para cerrar el modal de la imagen
-  closeEditModalImg() {
-    this.newImagen.style.display = "none";
-    this.resetValidation(this.newImagen); // Asegúrate de que la función resetValidation esté definida
+  // Abre el popup
+  open() {
+    this._popup.classList.add("popup_opened");
+    this._popup.style.display = "flex"; // 🔥 Forzar visibilidad en caso de que display: none siga activo
+    document.addEventListener("keydown", this._handleEscClose); // Escucha el evento de presionar la tecla 'Esc'
+    console.log("Popup abierto");
   }
 
-  // Método para mostrar el popup con imagen ampliada
-  showPopup(event) {
-    const img = event.target;
-    this.imagenPopup.src = img.src;
-    this.popupParagraph.textContent = img.getAttribute("data-title");
-    this.popup.style.display = "flex";
-    this.popupParagraph.style.display = "flex";
+  // Cierra el popup
+  close() {
+    this._popup.classList.remove("popup_opened");
+    document.removeEventListener("keydown", this._handleEscClose); // Deja de escuchar el evento de presionar la tecla 'Esc'
+    console.log("Popup cerrado");
+  }
 
-    // Hacer las demás imágenes opacas
-    this.imagenes.forEach((otherImg) => {
-      if (otherImg !== img) {
-        otherImg.classList.add("activa");
+  // Método privado para cerrar el popup cuando se presiona la tecla Esc
+  _handleEscClose(event) {
+    if (event.key === "Escape") {
+      this.close();
+    }
+  }
+
+  // Método para agregar los listeners de eventos
+  setEventListeners() {
+    // Cerrar el popup al hacer clic en el icono de cerrar (se asume que el popup tiene un botón con la clase '.popup__close')
+    const closeButton = this._popup.querySelector(".popup__close");
+    closeButton.addEventListener("click", () => this.close());
+
+    // Cerrar el popup al hacer clic en el área sombreada del popup (la parte externa del formulario/modal)
+    this._popup.addEventListener("click", (event) => {
+      if (event.target === this._popup) {
+        this.close();
       }
     });
   }
-
-  // Método para resetear la validación (puedes definir lo que hace)
-  resetValidation(element) {
-    // Lógica para resetear validación
-  }
 }
-
-// Crear una instancia de la clase ImagePopup y asociar eventos
-const imagePopupInstance = new ImagePopup();
-imagePopupInstance.imagenes.forEach((img) => {
-  img.addEventListener('click', (event) => imagePopupInstance.showPopup(event));
-});

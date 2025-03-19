@@ -1,4 +1,6 @@
-export {closePopup,}
+import {Popup} from "./popup.js";
+
+export {closePopup}
 
 const imagenes = document.querySelectorAll(".element__img");
 const popup = document.getElementById("popup");
@@ -20,16 +22,6 @@ export default function showPopup(event) {
     }
   });
 
-  // Crear el botón de cerrar
-  const closeButton = document.Card("div");
-  closeButton.classList.add("popup__close");
-  closeButton.textContent = "✖";
-  closeButton.addEventListener("click", closePopup);
-
-  popup.appendChild(closeButton);
-
-  // Agregar evento para cerrar con Esc
-  document.addEventListener("keydown", closeOnEsc);
 }
 
 // Función para cerrar el popup

@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
       closePopup();
       closeEditModal();
       closeEditModalImg();
+
     }
   }
 
@@ -119,5 +120,5 @@ document.addEventListener("DOMContentLoaded", () => {
   saveButtonImg.addEventListener("click", handleSaveImageForm);
   openButton.addEventListener("click", showImageForm);
 
-  document.addEventListener("keydown", closeOnEsc);
+ document.addEventListener("keydown", closeOnEsc);
 });
