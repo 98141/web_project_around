@@ -18,7 +18,6 @@ export default class Section {
     });
   }
 
-
    // Agrega un nuevo elemento al contenedor
   addItem(element) {
       this._container.prepend(element);

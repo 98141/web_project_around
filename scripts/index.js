@@ -3,6 +3,9 @@ import { ElementsData } from "./cardInitial.js";
 import FormValidator from "./formValidator.js";
 import showPopup from "./utils.js";
 import { closePopup } from "./utils.js";
+import Section from "./Section.js";
+import PopupWithImages from "./popupWithImage.js";
+import PopupWithForm from "./popupWithForm.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Elementos del DOM
@@ -16,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const nameElement = document.querySelector(".profile__info-name");
   const functionElement = document.querySelector(".profile__info-function");
-
   const elementsContainer = document.querySelector("#elements");
   const newImagen = document.getElementById("nuevoLugar");
   const nameImg = document.getElementById("nameImg");
@@ -29,12 +31,15 @@ document.addEventListener("DOMContentLoaded", () => {
       closePopup();
       closeEditModal();
       closeEditModalImg();
-
     }
   }
 
+  //validacion de los formularios
   const formValidatormodal = new FormValidator(modal);
   formValidatormodal.enableValidation();
+
+  const formValidatorImg = new FormValidator(newImagen);
+  formValidatorImg.enableValidation();
 
   // Función para abrir el modal de edición de perfil
   function openEditModal() {
@@ -54,9 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function closeEditModal() {
     modal.style.display = "none";
   }
-
-  const formValidatorImg = new FormValidator(newImagen);
-  formValidatorImg.enableValidation();
 
   // Función para mostrar el formulario de nueva imagen
   function showImageForm() {
@@ -80,37 +82,53 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  //Funcion para cerrar el popup de las imagenes
   function closeEditModalImg() {
     newImagen.style.display = "none";
-    //formValidatorImg(newImagen);
   }
 
-  // Agregar imágenes al DOM
-  ElementsData.forEach((data) => {
-    const newCard = new Card(data);
-    const element = newCard.createElement({ src: data.src, title: data.title }); // Usar el método createElement para obtener el nodo DOM
-    elementsContainer.appendChild(element); // Agregar el nodo al contenedor
-  });
-
-  // Delegación de eventos para las imágenes
+  // Delegación de eventos para las imágenes abrir el popup de las imagenes
   elementsContainer.addEventListener("click", (event) => {
     if (event.target.classList.contains("element__img")) {
       showPopup(event);
     }
   });
 
-  //cerrar el modal
+  //cerrar el modal de editar perfil
   modal.addEventListener("click", (event) => {
     if (event.target === modal) {
       modal.style.display = "none";
     }
   });
+
   //cerrar el modal nueva imagen
   newImagen.addEventListener("click", (event) => {
     if (event.target === newImagen) {
       newImagen.style.display = "none";
     }
   });
+
+  //Instancia de section
+  const section = new Section(
+    {
+      items: ElementsData,
+      renderer: (data) => {
+        const newCard = new Card(data, "#element-template"); // Ajusta el templateSelector si es necesario
+        const element = newCard.createElement();
+        section.addItem(element);
+      },
+    },
+    "#elements" // Selector del contenedor en el DOM
+  );
+
+  section._renderItems();
+
+  //popup imagen
+  const popupWithImage = new PopupWithImages("#popup");
+  popupWithImage.setEventListeners();
+
+  //popup Formulario
+  
 
   // Asignar eventos
   editButton.addEventListener("click", openEditModal);
@@ -120,5 +138,5 @@ document.addEventListener("DOMContentLoaded", () => {
   saveButtonImg.addEventListener("click", handleSaveImageForm);
   openButton.addEventListener("click", showImageForm);
 
- document.addEventListener("keydown", closeOnEsc);
+  document.addEventListener("keydown", closeOnEsc);
 });

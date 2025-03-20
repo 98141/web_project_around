@@ -1,4 +1,4 @@
-import {Popup} from "./popup.js";
+import Popup from "./popup.js";
 
 export {closePopup}
 
@@ -20,6 +20,7 @@ export default function showPopup(event) {
     if (otherImg !== img) {
       otherImg.classList.add("activa");
     }
+
   });
 
 }
