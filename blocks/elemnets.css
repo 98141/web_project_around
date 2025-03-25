@@ -95,7 +95,7 @@
   max-height: 80%;
 }
 
-.imagen.activa {
+.imagen .activa {
   opacity: 0.3;
 }
 

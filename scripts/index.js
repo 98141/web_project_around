@@ -1,8 +1,6 @@
 import Card from "./card.js";
 import { ElementsData } from "./cardInitial.js";
 import FormValidator from "./formValidator.js";
-import showPopup from "./utils.js";
-import { closePopup } from "./utils.js";
 import Section from "./Section.js";
 import PopupWithImages from "./popupWithImage.js";
 import PopupWithForm from "./popupWithForm.js";
@@ -27,12 +25,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const saveButtonImg = document.getElementById("saveButtonImg");
   const openButton = document.querySelector("#profile__button");
 
+  // Crear una nueva instancia de PopupWithImages
+  const popupWithImage = new PopupWithImages("#popup");
+
+  // Función para cerrar el modal con la tecla Esc
+  //queda pendiente para ver si sigue funcional hasta el final o se cambia con el popup padre
   function closeOnEsc(event) {
     if (event.key === "Escape") {
-      closePopup();
       closeEditModal();
       closeEditModalImg();
-      console.log("Cerro popup por scape index  ");
+      console.log(
+        "Se encuentr en funcionamiento la tecla escape en la funcion index"
+      );
     }
   }
 
@@ -89,14 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
     newImagen.style.display = "none";
   }
 
-  // Delegación de eventos para las imágenes abrir el popup de las imagenes
-  elementsContainer.addEventListener("click", (event) => {
-    if (event.target.classList.contains("element__img")) {
-      showPopup(event);
-      console.log("Este imprime de index", showPopup);
-    }
-  });
-
   //cerrar el modal de editar perfil
   modal.addEventListener("click", (event) => {
     if (event.target === modal) {
@@ -126,10 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   section._renderItems();
 
-  //popup imagen
-  const popupWithImage = new PopupWithImages("#popup");
-  popupWithImage.setEventListeners();
-
   //popup Formulario.
 
   /*user info
@@ -142,6 +134,19 @@ document.addEventListener("DOMContentLoaded", () => {
     "submit",
     handleProfileFormSubmit(userInfo.setUserInfo)
   );*/
+
+  // Delegación de eventos para las imágenes abrir el popup de las imagenes
+  elementsContainer.addEventListener("click", (event) => {
+    if (event.target.classList.contains("element__img")) {
+      // Obtener la URL de la imagen y el título
+      const imageSrc = event.target.src;
+      const imageTitle = event.target.alt || "Imagen sin título";
+      // Configurar los listeners para el popup
+      popupWithImage.setEventListeners();
+      // Abrir el popup y pasarle los datos de la imagen
+      popupWithImage.open({ src: imageSrc, title: imageTitle });
+    }
+  });
 
   // Asignar eventos
   editButton.addEventListener("click", openEditModal);

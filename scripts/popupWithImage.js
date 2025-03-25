@@ -8,6 +8,7 @@ export  default class PopupWithImages extends Popup {
   }
 
   open({ src, title }) {
+    super.open();
 
     if (!src || !title) {
       console.error("Datos inválidos para abrir el popup.");
@@ -16,8 +17,6 @@ export  default class PopupWithImages extends Popup {
     this._image.src = src;
     this._image.alt = title;
     this._caption.textContent = title;
-    super.open();
-
   }
 
 
