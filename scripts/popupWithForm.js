@@ -7,8 +7,6 @@ export default class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit; // Callback para el envío del formulario
     this._form = this._popup.querySelector('form'); // Selecciona el formulario dentro del popup
     this._inputList = this._form.querySelectorAll('input'); // Selecciona todos los campos de entrada
-
-    console.log("Popup del fornulario")
   }
 
   // Método privado para obtener los valores de los campos de entrada

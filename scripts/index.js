@@ -6,6 +6,7 @@ import { closePopup } from "./utils.js";
 import Section from "./Section.js";
 import PopupWithImages from "./popupWithImage.js";
 import PopupWithForm from "./popupWithForm.js";
+import UserInfo from "./userInfo.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Elementos del DOM
@@ -31,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       closePopup();
       closeEditModal();
       closeEditModalImg();
+      console.log("Cerro popup por scape index  ");
     }
   }
 
@@ -91,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
   elementsContainer.addEventListener("click", (event) => {
     if (event.target.classList.contains("element__img")) {
       showPopup(event);
+      console.log("Este imprime de index", showPopup);
     }
   });
 
@@ -127,8 +130,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const popupWithImage = new PopupWithImages("#popup");
   popupWithImage.setEventListeners();
 
-  //popup Formulario
-  
+  //popup Formulario.
+
+  /*user info
+  const userInfo = new UserInfo({
+    nameElement: "#nameInput",
+    workElement: "#functionInput",
+  });
+
+  modal.addEventListener(
+    "submit",
+    handleProfileFormSubmit(userInfo.setUserInfo)
+  );*/
 
   // Asignar eventos
   editButton.addEventListener("click", openEditModal);

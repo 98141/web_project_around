@@ -22,6 +22,7 @@ export default function showPopup(event) {
     }
 
   });
+  console.log("Abrio popup por utils  ");
 
 }
 
@@ -38,5 +39,6 @@ function closePopup() {
 popup.addEventListener("click", (event) => {
   if (event.target === popup) {
     closePopup();
+    console.log("Cerro popup por utils  ");
   }
 });
