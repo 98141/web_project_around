@@ -1,10 +1,10 @@
-import Card from "./card.js";
+import Card from "./Card.js";
 import { ElementsData } from "./cardInitial.js";
-import FormValidator from "./formValidator.js";
+import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
-import PopupWithImages from "./popupWithImage.js";
-import PopupWithForm from "./popupWithForm.js";
-import UserInfo from "./userInfo.js";
+import PopupWithImages from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
 import { handleSaveImageForm } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -45,10 +45,15 @@ document.addEventListener("DOMContentLoaded", () => {
     formValidatormodal.enableValidation();
 
     //delegacion de eventos para formulario
-    const handleFormSubmit = () => {
-    };
+    const handleFormSubmit = () => {};
     const popupForm = new PopupWithForm("#popup", handleFormSubmit);
     popupForm.setEventListeners();
+
+    //Informacion del elemento usuario
+    const userInfo = new UserInfo(
+      "#profile__info-name", ".profile__info-function"
+    );
+    userInfo.getUserInfo();
   });
 
   // Función para guardar los cambios en el perfil
@@ -71,15 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const formValidatorImg = new FormValidator(newImagen);
     formValidatorImg.enableValidation();
 
-     //validacion de los formularios
-     const formValidatormodal = new FormValidator(newImagen);
-     formValidatormodal.enableValidation();
+    //validacion de los formularios
+    const formValidatormodal = new FormValidator(newImagen);
+    formValidatormodal.enableValidation();
 
-     //delegacion de eventos para formulario
-     const handleFormSubmit = () => {
-     };
-     const popupForm = new PopupWithForm("#popup", handleFormSubmit);
-     popupForm.setEventListeners();
+    //delegacion de eventos para formulario
+    const handleFormSubmit = () => {};
+    const popupForm = new PopupWithForm("#popup", handleFormSubmit);
+    popupForm.setEventListeners();
   });
 
   //Funcion para cerrar el popup de las imagenes
@@ -115,17 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   section._renderItems();
-
-  /*user info
-  const userInfo = new UserInfo({
-    nameElement: "#nameInput",
-    workElement: "#functionInput",
-  });
-
-  modal.addEventListener(
-    "submit",
-    handleProfileFormSubmit(userInfo.setUserInfo)
-  );*/
 
   // Delegación de eventos para las imágenes abrir el popup de las imagenes
   elementsContainer.addEventListener("click", (event) => {

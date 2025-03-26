@@ -3,8 +3,8 @@
   const linkImg = document.getElementById("linkImg");
   const elementsContainer = document.querySelector("#elements");
   const newImagen = document.getElementById("nuevoLugar");
-  
-  import Card from "./card.js";
+
+  import Card from "./Card.js";
 
   export function handleSaveImageForm(event) {
     event.preventDefault();
