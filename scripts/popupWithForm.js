@@ -1,39 +1,44 @@
-import Popup from './popup.js';
+import Popup from "./popup.js";
 
 export default class PopupWithForm extends Popup {
   constructor(popupSelector, handleFormSubmit) {
-    console.log("Recibido hijo form:", popupSelector); // Depuración
-    super(popupSelector); // Llama al constructor de Popup
-    this._handleFormSubmit = handleFormSubmit; // Callback para el envío del formulario
-    this._form = this._popup.querySelector('form'); // Selecciona el formulario dentro del popup
-    this._inputList = this._form.querySelectorAll('input'); // Selecciona todos los campos de entrada
+    super(popupSelector);
+    this._handleFormSubmit = handleFormSubmit;
+    this._form = document.querySelector("form"); // Selecciona el formulario externo
+    this._inputList = Array.from(this._form.querySelectorAll("input"));
+
   }
 
-  // Método privado para obtener los valores de los campos de entrada
+  // Método privado para recopilar datos de los inputs del formulario
   _getInputValues() {
-    const inputValues = {};
+    const formData = {};
     this._inputList.forEach(input => {
-      inputValues[input.name] = input.value; // Asocia los valores de los campos con sus nombres
+      formData[input.name] = input.value;
+      formData[input.name] = input.value;
     });
-    return inputValues;
+    return formData;
   }
 
-  // Sobrescribir el método setEventListeners para agregar el evento submit
+  // Modifica el método setEventListeners para manejar el submit del formulario
   setEventListeners() {
-    super.setEventListeners(); // Llama al método setEventListeners() del padre
+    super.setEventListeners();
 
-    // Agrega un evento al formulario para manejar el submit
-    this._form.addEventListener('submit', (event) => {
-      event.preventDefault(); // Previene el comportamiento por defecto de enviar el formulario
-      const inputValues = this._getInputValues(); // Obtiene los valores de los campos de entrada
-      this._handleFormSubmit(inputValues); // Llama al callback con los valores
-      this.close(); // Cierra el popup
+    // Agregar evento al formulario externo
+    this._form.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+      this._handleFormSubmit(this._getInputValues());
     });
+
+    //Asegurar que se usa el botón de cierre correcto
+    document.querySelector(".modal__close").addEventListener("click", () => {
+      this.close();
+    });
+
   }
 
-  // Sobrescribir el método close para resetear el formulario
+  // Sobrescribe el método close para resetear el formulario al cerrar
   close() {
-    super.close(); // Llama al método close() del padre
-    this._form.reset(); // Resetea el formulario
+    super.close();
+    this._form.reset();
   }
 }
