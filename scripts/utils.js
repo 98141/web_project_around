@@ -4,7 +4,7 @@
   const elementsContainer = document.querySelector("#elements");
   const newImagen = document.getElementById("nuevoLugar");
 
-  import Card from "./Card.js";
+  import card from "./Card.js";
 
   export function handleSaveImageForm(event) {
     event.preventDefault();
@@ -14,7 +14,7 @@
 
     if (imageTitle && imageURL) {
       const newCard = { title: imageTitle, src: imageURL };
-      const newElement = new Card(newCard);
+      const newElement = new card(newCard);
       elementsContainer.prepend(newElement.createElement(newCard)); // Agregar al inicio
       nameImg.value = "";
       linkImg.value = "";

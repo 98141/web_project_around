@@ -1,10 +1,10 @@
-import Card from "./Card.js";
-import { ElementsData } from "./cardInitial.js";
-import FormValidator from "./FormValidator.js";
-import Section from "./Section.js";
-import PopupWithImages from "./PopupWithImage.js";
-import PopupWithForm from "./PopupWithForm.js";
-import UserInfo from "./UserInfo.js";
+import card from "./Card.js";
+import { elementsData } from "./cardInitial.js";
+import formValidator from "./FormValidator.js";
+import section from "./Section.js";
+import popupWithImages from "./PopupWithImage.js";
+import popupWithForm from "./PopupWithForm.js";
+import userInfo from "./userInfo.js";
 import { handleSaveImageForm } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -41,19 +41,19 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.style.display = "flex";
 
     //validacion de los formularios
-    const formValidatormodal = new FormValidator(modal);
+    const formValidatormodal = new formValidator(modal);
     formValidatormodal.enableValidation();
 
     //delegacion de eventos para formulario
     const handleFormSubmit = () => {};
-    const popupForm = new PopupWithForm("#popup", handleFormSubmit);
+    const popupForm = new popupWithForm("#popup", handleFormSubmit);
     popupForm.setEventListeners();
 
     //Informacion del elemento usuario
-    const userInfo = new UserInfo(
+    const usersInfo = new userInfo(
       "#profile__info-name", ".profile__info-function"
     );
-    userInfo.getUserInfo();
+    usersInfo.getUserInfo();
   });
 
   // Función para guardar los cambios en el perfil
@@ -73,16 +73,16 @@ document.addEventListener("DOMContentLoaded", () => {
     newImagen.style.display = "flex";
 
     //validacion de los formularios
-    const formValidatorImg = new FormValidator(newImagen);
+    const formValidatorImg = new formValidator(newImagen);
     formValidatorImg.enableValidation();
 
     //validacion de los formularios
-    const formValidatormodal = new FormValidator(newImagen);
+    const formValidatormodal = new formValidator(newImagen);
     formValidatormodal.enableValidation();
 
     //delegacion de eventos para formulario
     const handleFormSubmit = () => {};
-    const popupForm = new PopupWithForm("#popup", handleFormSubmit);
+    const popupForm = new popupWithForm("#popup", handleFormSubmit);
     popupForm.setEventListeners();
   });
 
@@ -106,24 +106,24 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   //Instancia de section
-  const section = new Section(
+  const sections = new section(
     {
-      items: ElementsData,
+      items: elementsData,
       renderer: (data) => {
-        const newCard = new Card(data, "#element-template"); // Ajusta el templateSelector si es necesario
+        const newCard = new card(data, "#element-template"); // Ajusta el templateSelector si es necesario
         const element = newCard.createElement();
-        section.addItem(element);
+        sections.addItem(element);
       },
     },
     "#elements" // Selector del contenedor en el DOM
   );
 
-  section._renderItems();
+  sections._renderItems();
 
   // Delegación de eventos para las imágenes abrir el popup de las imagenes
   elementsContainer.addEventListener("click", (event) => {
     // Crear una nueva instancia de PopupWithImages
-    const popupWithImage = new PopupWithImages("#popup");
+    const popupWithImage = new popupWithImages("#popup");
 
     if (event.target.classList.contains("element__img")) {
       // Obtener la URL de la imagen y el título

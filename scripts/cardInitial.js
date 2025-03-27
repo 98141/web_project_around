@@ -1,4 +1,4 @@
-export const ElementsData = [
+export const elementsData = [
   {
     src: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/yosemite.jpg",
     title: "Valle de Yosemite",
