@@ -4,7 +4,7 @@
   const elementsContainer = document.querySelector("#elements");
   const newImagen = document.getElementById("nuevoLugar");
 
-  import card from "./Card.js";
+  import card from "./card.js";
 
   export function handleSaveImageForm(event) {
     event.preventDefault();
