@@ -1,7 +1,7 @@
 import card from "./card.js";
 import { elementsData } from "./cardInitial.js";
 import formValidator from "./formValidator.js";
-import section from "./section.js";
+import section from "./Section.js";
 import popupWithImages from "./popupWithImage.js";
 import popupWithForm from "./popupWithForm.js";
 import userInfo from "./userInfo.js";
@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const saveButton = document.getElementById("saveButton");
   const closeButton = document.getElementById("closeButton");
   const closeButtonImg = document.getElementById("closeButtonImg");
+  const closeButtonPopup = document.getElementById("closeButtonPopup");
 
   const nameElement = document.querySelector(".profile__info-name");
   const functionElement = document.querySelector(".profile__info-function");
@@ -133,6 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
       popupWithImage.setEventListeners();
       // Abrir el popup y pasarle los datos de la imagen
       popupWithImage.open({ src: imageSrc, title: imageTitle });
+      //popupWithImage.close();
     }
   });
 
@@ -141,6 +143,11 @@ document.addEventListener("DOMContentLoaded", () => {
   closeButton.addEventListener("click", closeEditModal);
   closeButtonImg.addEventListener("click", closeEditModalImg);
   saveButtonImg.addEventListener("click", handleSaveImageForm);
+
+  closeButtonPopup.addEventListener("click", () => {
+    const popup = document.querySelector(".popup");
+    popup.style.display = "none";
+  });
 
   document.addEventListener("keydown", closeOnEsc);
 });

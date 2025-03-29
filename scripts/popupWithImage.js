@@ -19,5 +19,4 @@ export  default class PopupWithImages extends popup {
     this._caption.textContent = title;
   }
 
-
 }
