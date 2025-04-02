@@ -12,7 +12,7 @@ export default class Section {
   }
 
    // Renderiza todos los elementos en la página utilizando la función renderer
-  _renderItems() {
+  renderItems() {
     this._items.forEach(item => {
       this._renderer(item); // Llama a la función renderer para cada elemento
     });

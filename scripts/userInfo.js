@@ -1,24 +1,24 @@
 export default class UserInfo {
-  constructor(nameElement, workElement) {
-
-    this._nameElement = document.querySelector(nameElement);
-    this._titleElement = document.querySelector(workElement);
+  constructor(nameSelector, hobbieSelector, avatarSelector ) {
+    this._nameElement = document.querySelector(nameSelector);
+    this._hobbieElement = document.querySelector(hobbieSelector);
+    this._avatarElement = document.querySelector(avatarSelector);
   }
 
   getUserInfo() {
     return {
       name: this._nameElement.textContent,
-      title: this._titleElement.textContent,
+      title: this._hobbieElement.textContent,
+      avatar: this._avatarElement.src,
     };
   }
 
-  setUserInfo({ name, title }) {
-    const nameValueProfile = document.querySelector(".profile__info-name");
-    const dedicationValueProfile = document.querySelector(
-      ".profile__info-function"
-    );
+    // Método público para establecer la nueva información del usuario
+    setUserInfo({ name, hobbie, avatar }) {
+      if (name) this._nameElement.textContent = name;
+      if (hobbie) this._hobbieElement.textContent = hobbie;
+      if (avatar) this._avatarElement.src = avatar;
+    }
 
-    nameValueProfile.textContent = name;
-    dedicationValueProfile.textContent = title;
-  }
+
 }

@@ -26,14 +26,20 @@
       <main class="main">
         <section class="profile">
           <img
-            src="./images/Avatar.png"
-            alt="Imagen del avatar"
+            src=""
+            alt="Avatar"
             class="profile__avatar"
           />
+          <button class="profile__edit-avatar" aria-label="Editar Avatar">
+            <img
+              src="./images/edit_avatar.png"
+              alt="Botón para editar Avatar"
+            />
+          </button>
           <div class="profile__info">
             <div class="profile__info-item">
               <h1 id="profile__info-name" class="profile__info-name">
-                Jacques Cousteau
+
               </h1>
               <a href="#"
                 ><img
@@ -42,7 +48,7 @@
                   class="profile__info-button"
               /></a>
             </div>
-            <h2 class="profile__info-function">Explorador</h2>
+            <h2 class="profile__info-function"></h2>
           </div>
           <button id="profile__button" class="profile__button">+</button>
         </section>
@@ -82,8 +88,8 @@
         <section id="elements" class="elements"></section>
         <div class="popup" id="popup">
           <span class="modal__close modal__close-popup" id="closeButtonPopup">&times;</span>
+          <!-- src de img se agrega mediante JS -->
           <img
-            src=""
             alt="Imagen Ampliada"
             class="imagen-popup"
             id="imagenPopup"

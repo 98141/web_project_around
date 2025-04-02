@@ -6,6 +6,7 @@ import popupWithImages from "./popupWithImage.js";
 import popupWithForm from "./popupWithForm.js";
 import userInfo from "./userInfo.js";
 import { handleSaveImageForm } from "./utils.js";
+import { api } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Elementos del DOM
@@ -35,6 +36,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  //  Instancias de clases
+  const newuserInfo = new userInfo(
+    ".profile__info-name",
+    ".profile__info-function",
+    ".profile__avatar"
+  );
+
+  // Cargar datos del usuario desde la API
+  api
+    .getUserInfo()
+    .then((userData) => {
+      newuserInfo.setUserInfo({
+        name: userData.name,
+        hobbie: userData.about,
+        avatar: userData.avatar,
+      });
+    })
+    .catch((err) => console.error("Error al obtener datos del usuario:", err));
+
+  //Instancia de section para cargar las tarjetas
+  const sections = new section(
+    {
+      items: elementsData,
+      renderer: (data) => {
+        const newCard = new card(data, "#element-template"); // Ajusta el templateSelector si es necesario
+        const element = newCard.createElement();
+        sections.addItem(element);
+      },
+    },
+    "#elements" // Selector del contenedor en el DOM
+  );
+
+  sections.renderItems();
+
   // Función para abrir el modal de edición de perfil
   editButton.addEventListener("click", () => {
     nameInput.value = nameElement.textContent;
@@ -45,16 +80,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const formValidatormodal = new formValidator(modal);
     formValidatormodal.enableValidation();
 
-    //delegacion de eventos para formulario
-    const handleFormSubmit = () => {};
-    const popupForm = new popupWithForm("#popup", handleFormSubmit);
+    //delegacion de eventos para formulario de la api
+    const popupForm = new popupWithForm("#popup", (data) => {
+      api
+        .updateUserProfile(data.name, data.hobbie)
+        .then((updatedData) => {
+          newuserInfo.setUserInfo(updatedData);
+          popupForm.close();
+          console.log("Perfil actualizado:", updatedData);
+        })
+        .catch((err) => console.error("Error al actualizar perfil:", err));
+    });
     popupForm.setEventListeners();
-
-    //Informacion del elemento usuario
-    const usersInfo = new userInfo(
-      "#profile__info-name", ".profile__info-function"
-    );
-    usersInfo.getUserInfo();
   });
 
   // Función para guardar los cambios en el perfil
@@ -105,21 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
       newImagen.style.display = "none";
     }
   });
-
-  //Instancia de section
-  const sections = new section(
-    {
-      items: elementsData,
-      renderer: (data) => {
-        const newCard = new card(data, "#element-template"); // Ajusta el templateSelector si es necesario
-        const element = newCard.createElement();
-        sections.addItem(element);
-      },
-    },
-    "#elements" // Selector del contenedor en el DOM
-  );
-
-  sections._renderItems();
 
   // Delegación de eventos para las imágenes abrir el popup de las imagenes
   elementsContainer.addEventListener("click", (event) => {

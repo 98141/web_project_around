@@ -11,6 +11,30 @@
   margin-right: 30px;
 }
 
+/* Botón de editar avatar */
+.profile__edit-avatar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.profile__edit-avatar img {
+  width: 20px;
+  height: 20px;
+}
+
 .profile__info {
   width: 415px;
   height: 77px;
