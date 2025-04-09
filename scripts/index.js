@@ -1,7 +1,7 @@
 import card from "./card.js";
 import { elementsData } from "./cardInitial.js";
 import formValidator from "./formValidator.js";
-import section from "./Section.js";
+import Section from "./Section.js";
 import popupWithImages from "./popupWithImage.js";
 import popupWithForm from "./popupWithForm.js";
 import userInfo from "./userInfo.js";
@@ -55,20 +55,28 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => console.error("Error al obtener datos del usuario:", err));
 
-  //Instancia de section para cargar las tarjetas
-  const sections = new section(
-    {
-      items: elementsData,
-      renderer: (data) => {
-        const newCard = new card(data, "#element-template"); // Ajusta el templateSelector si es necesario
-        const element = newCard.createElement();
-        sections.addItem(element);
-      },
-    },
-    "#elements" // Selector del contenedor en el DOM
-  );
+    // Cargar tarjetas desde la API
+    api.getInitialCards()
+    .then((initialCards) => {
+      const sections = new Section(
+        {
+          items: initialCards.reverse(),
+          renderer: (item) => {
+            const cardData = {
+              src: item.link,
+              title: item.name
+            };
 
-  sections.renderItems();
+            const cards = new card(cardData, "#element-template");
+            const cardElement = cards.createElement();
+            sections.addItem(cardElement);
+          },
+        },
+        "#elements"
+      );
+      sections.renderItems();
+    })
+    .catch((err) => console.error("Error al cargar tarjetas:", err));
 
   // Función para abrir el modal de edición de perfil
   editButton.addEventListener("click", () => {

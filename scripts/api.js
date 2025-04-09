@@ -35,6 +35,7 @@ class Api {
       })
       .then((result) => {
         console.log(result);
+        console.log("Informacion de las tarjetas punto 2",result);
         return result;
       });
   }
