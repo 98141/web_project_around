@@ -5,10 +5,18 @@
   align-items: center;
 }
 
-.profile__avatar {
+/* Avatar */
+.profile__avatarr {
+  position: relative;
   width: 120px;
   height: 120px;
   margin-right: 30px;
+}
+
+.profile__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
 }
 
 /* Botón de editar avatar */
@@ -19,7 +27,7 @@
   width: 40px;
   height: 40px;
   transform: translate(-50%, -50%);
-  background-color: black;
+  background-color: red;
   border: none;
   border-radius: 50%;
   display: flex;
@@ -140,7 +148,7 @@
     align-items: center;
   }
 
-  .profile__avatar {
+  .profile__avatarr {
     margin: 0;
     padding-bottom: 26.25px;
   }

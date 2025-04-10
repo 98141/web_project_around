@@ -17,7 +17,7 @@ class Api {
         return res.json();
       })
       .then((result) => {
-        console.log("Informacion del usuario punto 1",result);
+        console.log("Informacion del usuario punto 1");
         return result;
       });
   }
@@ -34,8 +34,7 @@ class Api {
         return res.json();
       })
       .then((result) => {
-        console.log(result);
-        console.log("Informacion de las tarjetas punto 2",result);
+        console.log("Informacion de las tarjetas punto 2");
         return result;
       });
   }

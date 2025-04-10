@@ -55,8 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => console.error("Error al obtener datos del usuario:", err));
 
-    // Cargar tarjetas desde la API
-    api.getInitialCards()
+  // Cargar tarjetas desde la API
+  api
+    .getInitialCards()
     .then((initialCards) => {
       const sections = new Section(
         {
@@ -64,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
           renderer: (item) => {
             const cardData = {
               src: item.link,
-              title: item.name
+              title: item.name,
             };
 
             const cards = new card(cardData, "#element-template");
@@ -78,11 +79,24 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => console.error("Error al cargar tarjetas:", err));
 
+  //Editar el perfil y guardar los cambios en la api - popup de perfil
+  const profilePopup = new popupWithForm("#popup", (data) => {
+    api
+      .updateUserProfile(data.name, data.hobbie)
+      .then((updatedData) => {
+        newuserInfo.setUserInfo(updatedData);
+        profilePopup.close();
+      })
+      .catch((err) => console.error("Error al actualizar perfil:", err));
+  });
+  profilePopup.setEventListeners();
+
   // Función para abrir el modal de edición de perfil
   editButton.addEventListener("click", () => {
     nameInput.value = nameElement.textContent;
     functionInput.value = functionElement.textContent;
     modal.style.display = "flex";
+    console.log("Modal abierto");
 
     //validacion de los formularios
     const formValidatormodal = new formValidator(modal);
