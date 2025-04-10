@@ -4,7 +4,6 @@ import Section from "./Section.js";
 import popupWithImages from "./popupWithImage.js";
 import popupWithForm from "./popupWithForm.js";
 import userInfo from "./userInfo.js";
-import { handleSaveImageForm } from "./utils.js";
 import { api } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -23,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const elementsContainer = document.querySelector("#elements");
   const newImagen = document.getElementById("nuevoLugar");
 
-  const saveButtonImg = document.getElementById("saveButtonImg");
   const openButton = document.querySelector("#profile__button");
 
   // Función para cerrar el modal con la tecla Esc
@@ -48,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((userData) => {
       newuserInfo.setUserInfo({
         name: userData.name,
-        hobbie: userData.about,
+        about: userData.about,
         avatar: userData.avatar,
       });
     })
@@ -78,43 +76,32 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => console.error("Error al cargar tarjetas:", err));
 
+  // Función para abrir el modal de edición de perfil
+  editButton.addEventListener("click", () => {
+    const currentUser = newuserInfo.getUserInfo();
+    nameInput.value = currentUser.name;
+    functionInput.value = currentUser.title;
+
+    modal.style.display = "flex";
+
+    profilePopup.open();
+  });
+
+  //validacion de los formularios
+  const formValidatormodal = new formValidator(modal);
+  formValidatormodal.enableValidation();
+
   //Editar el perfil y guardar los cambios en la api - popup de perfil
-  const profilePopup = new popupWithForm("#popup", (data) => {
-    api
-      .updateUserProfile(data.name, data.hobbie)
+  const profilePopup = new popupWithForm("#editModal", (data) => {
+    return api
+      .updateUserProfile(data.name, data.about)
       .then((updatedData) => {
         newuserInfo.setUserInfo(updatedData);
         profilePopup.close();
-        console.log("Perfil actualizado:", updatedData);
       })
       .catch((err) => console.error("Error al actualizar perfil:", err));
   });
   profilePopup.setEventListeners();
-
-  // Función para abrir el modal de edición de perfil
-  editButton.addEventListener("click", () => {
-    nameInput.value = nameElement.textContent;
-    functionInput.value = functionElement.textContent;
-    modal.style.display = "flex";
-    console.log("Modal abierto");
-
-    //validacion de los formularios
-    const formValidatormodal = new formValidator(modal);
-    formValidatormodal.enableValidation();
-
-    //delegacion de eventos para formulario de la api
-    const popupForm = new popupWithForm("#popup", (data) => {
-      api
-        .updateUserProfile(data.name, data.hobbie)
-        .then((updatedData) => {
-          newuserInfo.setUserInfo(updatedData);
-          popupForm.close();
-          console.log("Perfil actualizado:", updatedData);
-        })
-        .catch((err) => console.error("Error al actualizar perfil:", err));
-    });
-    popupForm.setEventListeners();
-  });
 
   // Función para guardar los cambios en el perfil
   function saveProfile() {
@@ -132,23 +119,31 @@ document.addEventListener("DOMContentLoaded", () => {
   openButton.addEventListener("click", () => {
     newImagen.style.display = "flex";
 
-    //validacion de los formularios
-    const formValidatorImg = new formValidator(newImagen);
-    formValidatorImg.enableValidation();
-
-    //validacion de los formularios
-    const formValidatormodal = new formValidator(newImagen);
-    formValidatormodal.enableValidation();
-
-    //delegacion de eventos para formulario
-    const handleFormSubmit = () => {};
-    const popupForm = new popupWithForm("#popup", handleFormSubmit);
-    popupForm.setEventListeners();
+    console.log("Formulario de nueva imagen validado", popupForm);
+    popupForm.open();
   });
+
+  //validacion de los formularios
+  const formValidatorImg = new formValidator(newImagen);
+  formValidatorImg.enableValidation();
+
+  // Función para guardar la nueva imagen
+  const popupForm = new popupWithForm("#nuevoLugar", (data) => {
+    return api
+      .addNewCard(data.name, data.link)
+      .then((newCard) => {
+        const cardElement = (newCard.link, newCard.name, newCard._id);
+        newImagen.prepend(cardElement);
+        popupForm.close();
+      })
+      .catch((err) => console.error("Error al agregar tarjeta:", err));
+  });
+  popupForm.setEventListeners();
 
   //Funcion para cerrar el popup de las imagenes
   function closeEditModalImg() {
     newImagen.style.display = "none";
+    popupForm.close();
   }
 
   //cerrar el modal de editar perfil
@@ -186,7 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
   saveButton.addEventListener("click", saveProfile);
   closeButton.addEventListener("click", closeEditModal);
   closeButtonImg.addEventListener("click", closeEditModalImg);
-  saveButtonImg.addEventListener("click", handleSaveImageForm);
 
   closeButtonPopup.addEventListener("click", () => {
     const popup = document.querySelector(".popup");

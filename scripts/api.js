@@ -1,4 +1,3 @@
-
 class Api {
   constructor(options) {
     // cuerpo del constructor
@@ -41,21 +40,23 @@ class Api {
 
   // 3. Editar el perfil
   updateUserProfile(name, about) {
-    return fetch(this.baseUrl + "/users/me", {
-      method: "PATCH",
-      headers: this.headers,
-      body: JSON.stringify({ name, about }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          return Promise.reject(`Error: ${res.status}`);
-        }
-        return res.json();
+    return (
+      fetch(this.baseUrl + "/users/me", {
+        method: "PATCH",
+        headers: this.headers,
+        body: JSON.stringify({ name, about }),
       })
-      .then((result) => {
-        console.log("Perfil actualizado:", result);
-        return result;
-      });
+        .then((res) => {
+          if (!res.ok) {
+            return Promise.reject(`Error: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then((result) => {
+          console.log("Informacion del perfil modificada punto 3");
+          return result;
+        })
+    );
   }
 
   //4. Agregar una nueva tarjeta
@@ -66,6 +67,7 @@ class Api {
       body: JSON.stringify({ name, link }),
     })
       .then((res) => {
+        console.log("Nueva tarjeta agregada punto 4");
         if (!res.ok) {
           return res
             .json()

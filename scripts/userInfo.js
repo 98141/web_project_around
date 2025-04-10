@@ -14,9 +14,9 @@ export default class UserInfo {
   }
 
     // Método público para establecer la nueva información del usuario
-    setUserInfo({ name, hobbie, avatar }) {
+    setUserInfo({ name, about, avatar }) {
       if (name) this._nameElement.textContent = name;
-      if (hobbie) this._hobbieElement.textContent = hobbie;
+      if (about) this._hobbieElement.textContent = about;
       if (avatar) this._avatarElement.src = avatar;
     }
 

@@ -4,7 +4,7 @@ export default class PopupWithForm extends popup {
   constructor(popupSelector, handleFormSubmit) {
     super(popupSelector);
     this._handleFormSubmit = handleFormSubmit;
-    this._form = document.querySelector("form"); // Selecciona el formulario externo
+    this._form = document.querySelector(popupSelector); // Selecciona el formulario externo
     this._inputList = Array.from(this._form.querySelectorAll("input"));
     this._submitButton = this._form.querySelector(".form__submit");
     this._submitButtonText = this._submitButton.textContent;
@@ -14,7 +14,7 @@ export default class PopupWithForm extends popup {
   _getInputValues() {
     const formData = {};
     this._inputList.forEach((input) => {
-      formValues[input.name] = input.value;
+      formData[input.name] = input.value;
     });
     return formData;
   }
@@ -24,21 +24,22 @@ export default class PopupWithForm extends popup {
     if (isLoading) {
       this._submitButton.textContent = "Guardando...";
     } else {
-      this._submitButton.textContent = this._submitButtonText;
+      setTimeout(() => {
+        this._submitButton.textContent = this._submitButtonText;
+      }, 200); // 2000 ms = 2 segundos
     }
   }
 
   // Modifica el método setEventListeners para manejar el submit del formulario
   setEventListeners() {
     super.setEventListeners();
-
+    console.log("Formulario de nueva imagen validado");
     // Agregar evento al formulario externo
     this._form.addEventListener("submit", (evt) => {
-      console.log("Formulario enviado");
       evt.preventDefault();
-      this._toggleLoadingState(true); // Mostrar "Guardando..."
+      this._toggleLoadingState(true);
       this._handleFormSubmit(this._getInputValues())
-        .then(() => this.close()) // Cerrar si la solicitud fue exitosa
+      .then(() => this.close()) // Cerrar si la solicitud fue exitosa
         .catch((err) => console.error("Error al enviar formulario:", err))
         .finally(() => this._toggleLoadingState(false)); // Restaurar el botón
     });
@@ -48,6 +49,6 @@ export default class PopupWithForm extends popup {
   // Sobrescribe el método close para resetear el formulario al cerrar
   close() {
     super.close();
-    this._form.reset();
+    //this._form.reset();
   }
 }
