@@ -1,5 +1,4 @@
 import card from "./card.js";
-import { elementsData } from "./cardInitial.js";
 import formValidator from "./formValidator.js";
 import Section from "./Section.js";
 import popupWithImages from "./popupWithImage.js";
@@ -86,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((updatedData) => {
         newuserInfo.setUserInfo(updatedData);
         profilePopup.close();
+        console.log("Perfil actualizado:", updatedData);
       })
       .catch((err) => console.error("Error al actualizar perfil:", err));
   });
