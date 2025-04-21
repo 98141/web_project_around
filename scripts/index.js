@@ -76,6 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => console.error("Error al cargar tarjetas:", err));
 
+  //Megusta de las tarjetas
+  api
+    .toggleLike()
+    .then(() => !isLiked)
+    .catch((err) => {
+      console.error("Error al alternar 'me gusta':", err);
+    });
+
   // Función para abrir el modal de edición de perfil
   editButton.addEventListener("click", () => {
     const currentUser = newuserInfo.getUserInfo();
@@ -135,10 +143,33 @@ document.addEventListener("DOMContentLoaded", () => {
         const cardElement = (newCard.link, newCard.name, newCard._id);
         newImagen.prepend(cardElement);
         popupForm.close();
+        console.log("Tarjeta agregada:", cardElement);
+        //newImagen.renderItems();
       })
       .catch((err) => console.error("Error al agregar tarjeta:", err));
   });
   popupForm.setEventListeners();
+
+  /*Función para guardar la nueva imagen
+const popupForm = new popupWithForm("#nuevoLugar", (data) => {
+  return api
+    .addNewCard(data.name, data.link)
+    .then((newCard) => {
+      const cardData = {
+        src: newCard.link,
+        title: newCard.name,
+      };
+
+      const nuevaTarjeta = new card(cardData, "#element-template");
+      const cardElement = nuevaTarjeta.createElement();
+      newImagen.prepend(cardElement);
+
+      popupForm.close();
+    })
+    .catch((err) => console.error("Error al agregar tarjeta:", err));
+});
+
+popupForm.setEventListeners();*/
 
   //Funcion para cerrar el popup de las imagenes
   function closeEditModalImg() {
