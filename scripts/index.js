@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const openButton = document.querySelector("#profile__button");
 
-
   const editAvatarButton = document.getElementById("editAvatarButton");
 
   //popup para cambiar avatar y validar formulario
@@ -45,7 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
     avatarPopup.open();
   });
 
-
   // Función para cerrar el modal con la tecla Esc
   function closeOnEsc(event) {
     if (event.key === "Escape") {
@@ -62,6 +60,47 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   // Cargar datos del usuario desde la API
+  // 1. Función reutilizable para crear una tarjeta
+  function createCard(item) {
+    const cardData = {
+      src: item.link,
+      title: item.name,
+      id: item._id,
+      isLiked: item.isLiked,
+      owner: item.owner,
+    };
+
+    const cards = new card(cardData, "#element-template", {
+      handleCardClick: (link, name) => {
+        showCardPopup.open(link, name);
+      },
+      handleAddLike: (cardId, isLiked) => {
+        return api
+          .toggleLike(cardId, isLiked)
+          .then(() => !isLiked)
+          .catch((err) => {
+            console.error("Error al alternar 'me gusta':", err);
+            return isLiked;
+          });
+      },
+    });
+
+    return cards.createElement();
+  }
+
+  // 2. Instancia de Section para las tarjetas
+  const section = new Section(
+    {
+      items: [], // inicialmente vacío
+      renderer: (item) => {
+        const cardElement = createCard(item);
+        section.addItem(cardElement);
+      },
+    },
+    "#elements"
+  );
+
+  // 3. Cargar datos del usuario desde la API
   api
     .getUserInfo()
     .then((userData) => {
@@ -73,44 +112,28 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => console.error("Error al obtener datos del usuario:", err));
 
-  // Cargar tarjetas desde la API
+  // 4. Cargar tarjetas desde la API
   api
     .getInitialCards()
     .then((initialCards) => {
-      const sections = new Section(
-        {
-          items: initialCards.reverse(),
-          renderer: (item) => {
-            const cardData = {
-              src: item.link,
-              title: item.name,
-              id: item._id,
-              isLiked: item.isLiked,
-              owner: item.owner,
-            };
-            const cards = new card(cardData, "#element-template", {
-              handleCardClick: (link, name) => {
-                showCardPopup.open(link, name);
-              },
-              handleAddLike: (cardId, isLiked) => {
-                return api
-                  .toggleLike(cardId, isLiked)
-                  .then(() => !isLiked)
-                  .catch((err) => {
-                    console.error("Error al alternar 'me gusta':", err);
-                    return isLiked;
-                  });
-              },
-            });
-            const cardElement = cards.createElement();
-            sections.addItem(cardElement);
-          },
-        },
-        "#elements"
-      );
-      sections.renderItems();
+      section._items = initialCards.reverse(); // actualiza los items
+      section.renderItems();
     })
     .catch((err) => console.error("Error al cargar tarjetas:", err));
+
+  // 5. Formulario para agregar nueva tarjeta
+  const popupForm = new popupWithForm("#nuevoLugar", (data) => {
+    return api
+      .addNewCard(data.name, data.link)
+      .then((newCard) => {
+        const cardElement = createCard(newCard);
+        section.addItem(cardElement); // Agrega la nueva tarjeta
+        popupForm.close();
+        console.log("Tarjeta agregada:", cardElement);
+      })
+      .catch((err) => console.error("Error al agregar tarjeta:", err));
+  });
+  popupForm.setEventListeners();
 
   // Función para abrir el modal de edición de perfil
   editButton.addEventListener("click", () => {
@@ -162,21 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
   //validacion de los formularios
   const formValidatorImg = new formValidator(newImagen);
   formValidatorImg.enableValidation();
-
-  // Función para guardar la nueva imagen
-  const popupForm = new popupWithForm("#nuevoLugar", (data) => {
-    return api
-      .addNewCard(name, link)
-      .then((newCard) => {
-        const cardElement = new card (newCard.link, newCard.name, newCard._id);
-        newImagen.prepend(cardElement);
-        popupForm.close();
-        console.log("Tarjeta agregada:", cardElement);
-        //newImagen.renderItems();
-      })
-      .catch((err) => console.error("Error al agregar tarjeta:", err));
-  });
-  popupForm.setEventListeners();
 
   //Funcion para cerrar el popup de las imagenes
   function closeEditModalImg() {
