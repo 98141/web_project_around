@@ -24,10 +24,9 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 40px;
-  height: 40px;
+  width: 120px;
+  height: 120px;
   transform: translate(-50%, -50%);
-  background-color: red;
   border: none;
   border-radius: 50%;
   display: flex;
@@ -36,11 +35,17 @@
   opacity: 0;
   transition: opacity 0.3s ease;
   cursor: pointer;
+  background: black;
 }
 
 .profile__edit-avatar img {
   width: 20px;
   height: 20px;
+}
+
+.profile__edit-avatar:hover {
+  opacity: 1;
+  opacity: 0.7;
 }
 
 .profile__info {
@@ -116,6 +121,15 @@
     margin-right: 15px;
   }
 
+  .profile__edit-avatar {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-58%, -60%);
+  }
+
   .profile__info {
     width: 370px;
     margin-right: 20px;
@@ -146,11 +160,21 @@
     margin: 42px 0 36px ;
     flex-direction: column;
     align-items: center;
+
   }
 
   .profile__avatarr {
     margin: 0;
     padding-bottom: 26.25px;
+  }
+
+  .profile__edit-avatar {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -61%);
   }
 
   .profile__info {

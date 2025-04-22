@@ -24,8 +24,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const openButton = document.querySelector("#profile__button");
 
+
+  const editAvatarButton = document.getElementById("editAvatarButton");
+
+  //popup para cambiar avatar y validar formulario
+  const editAvatar = new popupWithForm("#editAvatar", (data) => {
+    return api
+      .updateUserAvatar(data.avatar)
+      .then((updatedData) => {
+        newuserInfo.setUserInfo(updatedData);
+        editAvatar.close();
+      })
+      .catch((err) => console.error("Error al actualizar avatar:", err));
+  });
+  editAvatar.setEventListeners();
+
+  //funcion para mostrar la ventata de editar avatar
+  editAvatarButton.addEventListener("click", () => {
+    inputAvatar.value = "";
+    avatarPopup.open();
+  });
+
+
   // Función para cerrar el modal con la tecla Esc
-  //queda pendiente para ver si sigue funcional hasta el final o se cambia con el popup padre
   function closeOnEsc(event) {
     if (event.key === "Escape") {
       closeEditModal();
@@ -63,9 +84,24 @@ document.addEventListener("DOMContentLoaded", () => {
             const cardData = {
               src: item.link,
               title: item.name,
+              id: item._id,
+              isLiked: item.isLiked,
+              owner: item.owner,
             };
-
-            const cards = new card(cardData, "#element-template");
+            const cards = new card(cardData, "#element-template", {
+              handleCardClick: (link, name) => {
+                showCardPopup.open(link, name);
+              },
+              handleAddLike: (cardId, isLiked) => {
+                return api
+                  .toggleLike(cardId, isLiked)
+                  .then(() => !isLiked)
+                  .catch((err) => {
+                    console.error("Error al alternar 'me gusta':", err);
+                    return isLiked;
+                  });
+              },
+            });
             const cardElement = cards.createElement();
             sections.addItem(cardElement);
           },
@@ -75,14 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
       sections.renderItems();
     })
     .catch((err) => console.error("Error al cargar tarjetas:", err));
-
-  //Megusta de las tarjetas
-  api
-    .toggleLike()
-    .then(() => !isLiked)
-    .catch((err) => {
-      console.error("Error al alternar 'me gusta':", err);
-    });
 
   // Función para abrir el modal de edición de perfil
   editButton.addEventListener("click", () => {
@@ -138,9 +166,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Función para guardar la nueva imagen
   const popupForm = new popupWithForm("#nuevoLugar", (data) => {
     return api
-      .addNewCard(data.name, data.link)
+      .addNewCard(name, link)
       .then((newCard) => {
-        const cardElement = (newCard.link, newCard.name, newCard._id);
+        const cardElement = new card (newCard.link, newCard.name, newCard._id);
         newImagen.prepend(cardElement);
         popupForm.close();
         console.log("Tarjeta agregada:", cardElement);
@@ -149,27 +177,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((err) => console.error("Error al agregar tarjeta:", err));
   });
   popupForm.setEventListeners();
-
-  /*Función para guardar la nueva imagen
-const popupForm = new popupWithForm("#nuevoLugar", (data) => {
-  return api
-    .addNewCard(data.name, data.link)
-    .then((newCard) => {
-      const cardData = {
-        src: newCard.link,
-        title: newCard.name,
-      };
-
-      const nuevaTarjeta = new card(cardData, "#element-template");
-      const cardElement = nuevaTarjeta.createElement();
-      newImagen.prepend(cardElement);
-
-      popupForm.close();
-    })
-    .catch((err) => console.error("Error al agregar tarjeta:", err));
-});
-
-popupForm.setEventListeners();*/
 
   //Funcion para cerrar el popup de las imagenes
   function closeEditModalImg() {

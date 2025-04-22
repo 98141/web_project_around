@@ -85,6 +85,7 @@ class Api {
 
   //5. Alternar "me gusta" en una tarjeta
   toggleLike(cardId, isLiked) {
+    console.log("Like agregado punto 5");
     return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
       method: isLiked ? "DELETE" : "PUT",
       headers: this.headers,
@@ -96,7 +97,7 @@ class Api {
         return res.json();
       })
       .catch((err) => {
-        console.error("Error al alternar 'me gusta':", err);
+        console.error("Error al alternar 'me gusta api':", err);
         return Promise.reject(err);
       });
   }

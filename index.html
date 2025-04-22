@@ -27,7 +27,7 @@
         <section class="profile">
           <div class="profile__avatarr">
             <img src="" alt="Avatar" class="profile__avatar" />
-            <button class="profile__edit-avatar" aria-label="Editar Avatar">
+            <button class="profile__edit-avatar" aria-label="Editar Avatar" id="editAvatarButton">
               <img
                 src="./images/edit_avatar.png"
                 alt="Botón para editar Avatar"
@@ -48,6 +48,35 @@
           </div>
           <button id="profile__button" class="profile__button">+</button>
         </section>
+        <!-- Modal para editar el avatar -->
+        <div class="modal" id="editAvatar">
+          <form name="form" novalidate>
+            <div class="modal__content">
+              <span class="modal__close" id="closeButtonAvatar">&times;</span>
+              <h2 class="modal__content-title">Cambiar foto de perfil</h2>
+              <input
+                class="modal__content-input form__input"
+                type="url"
+                id="avatarInput"
+                placeholder="URL de la Imagen"
+                name="avatar"
+                required
+              />
+              <span id="avatarInput-error" class="form__input-error"></span>
+
+              <div class="modal__actions">
+                <button
+                  id="saveButtonAvatar"
+                  class="form__submit button_inactive"
+                  type="submit"
+                  disabled
+                >
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
         <!-- Modal para editar los datos -->
         <div class="modal" id="editModal">
           <form name="form" novalidate>
@@ -137,6 +166,14 @@
                 </button>
               </div>
             </div>
+          </form>
+        </div>
+        <!-- Ventana emergente de eliminar-->
+        <div class="modal" id="popup-delete">
+          <form class="form popup__form" id="form-delete" novalidate>
+            <span class="modal__close" id="closeButton">&times;</span>
+            <p class="form__title">¿Estás seguro/a?</p>
+            <button type="submit" class="form__submit form__delete">Si</button>
           </form>
         </div>
       </main>
