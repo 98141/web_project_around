@@ -33,17 +33,15 @@ export default class PopupWithForm extends popup {
   // Modifica el método setEventListeners para manejar el submit del formulario
   setEventListeners() {
     super.setEventListeners();
-    console.log("Formulario de nueva imagen validado");
     // Agregar evento al formulario externo
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this._toggleLoadingState(true);
       this._handleFormSubmit(this._getInputValues())
-      .then(() => this.close()) // Cerrar si la solicitud fue exitosa
+        .then(() => this.close()) // Cerrar si la solicitud fue exitosa
         .catch((err) => console.error("Error al enviar formulario:", err))
         .finally(() => this._toggleLoadingState(false)); // Restaurar el botón
     });
-
   }
 
   // Sobrescribe el método close para resetear el formulario al cerrar

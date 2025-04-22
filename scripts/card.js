@@ -33,8 +33,6 @@ export default class Card {
 
   //Crear un nuevo elemento con imagen y título
   createElement() {
-
-
     const element = document.createElement("div");
     element.classList.add("element");
 
@@ -48,7 +46,13 @@ export default class Card {
     deleteButton.classList.add("element__delete");
     deleteButton.textContent = "🗑️";
     deleteButton.addEventListener("click", () => {
-      element.remove();
+      if (this._handleDeleteCard) {
+        this._handleDeleteCard(this._id)
+          .then(() => {
+            element.remove();
+          })
+          .catch((err) => console.error("Error al eliminar tarjeta:", err));
+      }
     });
 
     const elementItem = document.createElement("div");

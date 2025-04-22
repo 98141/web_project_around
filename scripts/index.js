@@ -25,24 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const openButton = document.querySelector("#profile__button");
 
   const editAvatarButton = document.getElementById("editAvatarButton");
-
-  //popup para cambiar avatar y validar formulario
-  const editAvatar = new popupWithForm("#editAvatar", (data) => {
-    return api
-      .updateUserAvatar(data.avatar)
-      .then((updatedData) => {
-        newuserInfo.setUserInfo(updatedData);
-        editAvatar.close();
-      })
-      .catch((err) => console.error("Error al actualizar avatar:", err));
-  });
-  editAvatar.setEventListeners();
-
-  //funcion para mostrar la ventata de editar avatar
-  editAvatarButton.addEventListener("click", () => {
-    inputAvatar.value = "";
-    avatarPopup.open();
-  });
+  const editAvatar = document.getElementById("editAvatar");
 
   // Función para cerrar el modal con la tecla Esc
   function closeOnEsc(event) {
@@ -81,6 +64,15 @@ document.addEventListener("DOMContentLoaded", () => {
           .catch((err) => {
             console.error("Error al alternar 'me gusta':", err);
             return isLiked;
+          });
+      },
+      handleDeleteCard: (cardId) => {
+        return api
+          .removeCard(cardId)
+          .then(() => {
+          })
+          .catch((err) => {
+            console.error("Error al eliminar tarjeta:", err);
           });
       },
     });
@@ -129,13 +121,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const cardElement = createCard(newCard);
         section.addItem(cardElement); // Agrega la nueva tarjeta
         popupForm.close();
-        console.log("Tarjeta agregada:", cardElement);
       })
       .catch((err) => console.error("Error al agregar tarjeta:", err));
   });
   popupForm.setEventListeners();
 
-  // Función para abrir el modal de edición de perfil
+  // 6. Editar el perfil y guardar los cambios en la api - popup de perfil
+  const profilePopup = new popupWithForm("#editModal", (data) => {
+    return api
+      .updateUserProfile(data.name, data.about)
+      .then((updatedData) => {
+        newuserInfo.setUserInfo(updatedData);
+        profilePopup.close();
+      })
+      .catch((err) => console.error("Error al actualizar perfil:", err));
+  });
+  profilePopup.setEventListeners();
+
+  // 7. Función para abrir el modal de edición de perfil
   editButton.addEventListener("click", () => {
     const currentUser = newuserInfo.getUserInfo();
     nameInput.value = currentUser.name;
@@ -150,61 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const formValidatormodal = new formValidator(modal);
   formValidatormodal.enableValidation();
 
-  //Editar el perfil y guardar los cambios en la api - popup de perfil
-  const profilePopup = new popupWithForm("#editModal", (data) => {
-    return api
-      .updateUserProfile(data.name, data.about)
-      .then((updatedData) => {
-        newuserInfo.setUserInfo(updatedData);
-        profilePopup.close();
-      })
-      .catch((err) => console.error("Error al actualizar perfil:", err));
-  });
-  profilePopup.setEventListeners();
-
-  // Función para guardar los cambios en el perfil
-  function saveProfile() {
-    nameElement.textContent = nameInput.value;
-    functionElement.textContent = functionInput.value;
-    modal.style.display = "none";
-  }
-
-  // Función para cerrar el modal sin guardar cambios
-  function closeEditModal() {
-    modal.style.display = "none";
-  }
-
-  // Función para mostrar el formulario de nueva imagen
-  openButton.addEventListener("click", () => {
-    newImagen.style.display = "flex";
-
-    console.log("Formulario de nueva imagen validado", popupForm);
-    popupForm.open();
-  });
-
   //validacion de los formularios
   const formValidatorImg = new formValidator(newImagen);
   formValidatorImg.enableValidation();
-
-  //Funcion para cerrar el popup de las imagenes
-  function closeEditModalImg() {
-    newImagen.style.display = "none";
-    popupForm.close();
-  }
-
-  //cerrar el modal de editar perfil
-  modal.addEventListener("click", (event) => {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-
-  //cerrar el modal nueva imagen
-  newImagen.addEventListener("click", (event) => {
-    if (event.target === newImagen) {
-      newImagen.style.display = "none";
-    }
-  });
 
   // Delegación de eventos para las imágenes abrir el popup de las imagenes
   elementsContainer.addEventListener("click", (event) => {
@@ -222,6 +173,54 @@ document.addEventListener("DOMContentLoaded", () => {
       //popupWithImage.close();
     }
   });
+
+  //funcion para mostrar la ventata de editar avatar
+  editAvatarButton.addEventListener("click", () => {
+    editAvatar.style.display = "flex";
+  });
+
+  const formValidatorAvatar = new popupWithForm("#editAvatar", modal);
+  formValidatorAvatar.setEventListeners();
+
+  //cerrar el modal nueva imagen
+  newImagen.addEventListener("click", (event) => {
+    if (event.target === newImagen) {
+      newImagen.style.display = "none";
+    }
+  });
+
+  //cerrar el modal de editar perfil
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Función para mostrar el formulario de nueva imagen
+  openButton.addEventListener("click", () => {
+    newImagen.style.display = "flex";
+    popupForm.open();
+  });
+
+  // Funciones
+
+  //Funcion para cerrar el popup de las imagenes
+  function closeEditModalImg() {
+    newImagen.style.display = "none";
+    popupForm.close();
+  }
+
+  // Función para guardar los cambios en el perfil
+  function saveProfile() {
+    nameElement.textContent = nameInput.value;
+    functionElement.textContent = functionInput.value;
+    modal.style.display = "none";
+  }
+
+  // Función para cerrar el modal sin guardar cambios
+  function closeEditModal() {
+    modal.style.display = "none";
+  }
 
   // Asignar eventos
   saveButton.addEventListener("click", saveProfile);

@@ -16,7 +16,6 @@ class Api {
         return res.json();
       })
       .then((result) => {
-        console.log("Informacion del usuario punto 1");
         return result;
       });
   }
@@ -33,7 +32,6 @@ class Api {
         return res.json();
       })
       .then((result) => {
-        console.log("Informacion de las tarjetas punto 2");
         return result;
       });
   }
@@ -53,7 +51,6 @@ class Api {
           return res.json();
         })
         .then((result) => {
-          console.log("Informacion del perfil modificada punto 3");
           return result;
         })
     );
@@ -67,7 +64,6 @@ class Api {
       body: JSON.stringify({ name, link }),
     })
       .then((res) => {
-        console.log("Nueva tarjeta agregada punto 4");
         if (!res.ok) {
           return res
             .json()

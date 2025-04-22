@@ -1,5 +1,5 @@
 export default class UserInfo {
-  constructor(nameSelector, hobbieSelector, avatarSelector ) {
+  constructor(nameSelector, hobbieSelector, avatarSelector) {
     this._nameElement = document.querySelector(nameSelector);
     this._hobbieElement = document.querySelector(hobbieSelector);
     this._avatarElement = document.querySelector(avatarSelector);
@@ -13,12 +13,14 @@ export default class UserInfo {
     };
   }
 
-    // Método público para establecer la nueva información del usuario
-    setUserInfo({ name, about, avatar }) {
-      if (name) this._nameElement.textContent = name;
-      if (about) this._hobbieElement.textContent = about;
-      if (avatar) this._avatarElement.src = avatar;
-    }
+  // Método público para establecer la nueva información del usuario
+  setUserInfo({ name, about, avatar }) {
+    if (name) this._nameElement.textContent = name;
+    if (about) this._hobbieElement.textContent = about;
+    if (avatar) this._avatarElement.src = avatar;
+  }
 
-
+  setUserAvatar(newAvatarUrl) {
+    this._avatarElement.src = newAvatarUrl;
+  }
 }
