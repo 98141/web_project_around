@@ -30,14 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmDeletePopup = new PopupWithConfirmation("#confirmDeletePopup");
   confirmDeletePopup.setEventListeners();
 
-  // Función para cerrar el modal con la tecla Esc
-  function closeOnEsc(event) {
-    if (event.key === "Escape") {
-      closeEditModal();
-      closeEditModalImg();
-    }
-  }
-
   //  Instancias de clases
   const newuserInfo = new userInfo(
     ".profile__info-name",
@@ -241,5 +233,4 @@ document.addEventListener("DOMContentLoaded", () => {
     popup.style.display = "none";
   });
 
-  document.addEventListener("keydown", closeOnEsc);
 });
