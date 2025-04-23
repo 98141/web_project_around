@@ -34,5 +34,12 @@ export default class Popup {
         this.close();
       }
     });
+      // Cierra si se hace clic en el botón de cerrar (con clase modal__close o similar)
+  const closeButton = this._popup.querySelector(".modal__close");
+  if (closeButton) {
+    closeButton.addEventListener("click", () => {
+      this.close();
+    });
+    }
   }
 }

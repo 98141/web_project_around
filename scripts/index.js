@@ -11,11 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Elementos del DOM
   const editButton = document.querySelector(".profile__info-button");
   const modal = document.getElementById("editModal");
+  const modalAvatar = document.getElementById("editAvatar");
   const nameInput = document.getElementById("nameInput");
   const functionInput = document.getElementById("functionInput");
   const saveButton = document.getElementById("saveButton");
-  const closeButton = document.getElementById("closeButton");
-  const closeButtonImg = document.getElementById("closeButtonImg");
   const closeButtonPopup = document.getElementById("closeButtonPopup");
 
   const nameElement = document.querySelector(".profile__info-name");
@@ -26,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const openButton = document.querySelector("#profile__button");
 
   const editAvatarButton = document.getElementById("editAvatarButton");
-  const editAvatar = document.getElementById("editAvatar");
 
   //popup de confirmacion
   const confirmDeletePopup = new PopupWithConfirmation("#confirmDeletePopup");
@@ -81,9 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 confirmDeletePopup.close();
                 resolve(); // para que la tarjeta se elimine visualmente
               })
-              .catch((err) =>
-                console.error("Error al eliminar tarjeta:", err)
-              );
+              .catch((err) => console.error("Error al eliminar tarjeta:", err));
           });
         });
       },
@@ -161,6 +157,19 @@ document.addEventListener("DOMContentLoaded", () => {
     profilePopup.open();
   });
 
+  // 8. Editar el avatar y guardar los cambios en la API
+  const avatarPopup = new popupWithForm("#editAvatar", (data) => {
+    return api
+      .updateUserAvatar(data.avatar)
+      .then((updatedData) => {
+        newuserInfo.setUserInfo(updatedData); // actualiza el avatar en pantalla
+        avatarPopup.close();
+        console.log("Avatar actualizado");
+      })
+      .catch((err) => console.error("Error al actualizar avatar:", err));
+  });
+  avatarPopup.setEventListeners();
+
   //validacion de los formularios
   const formValidatormodal = new formValidator(modal);
   formValidatormodal.enableValidation();
@@ -168,6 +177,10 @@ document.addEventListener("DOMContentLoaded", () => {
   //validacion de los formularios
   const formValidatorImg = new formValidator(newImagen);
   formValidatorImg.enableValidation();
+
+  //validacion de los formularios
+  const formValidatorAvatar= new formValidator(modalAvatar);
+  formValidatorAvatar.enableValidation();
 
   // Delegación de eventos para las imágenes abrir el popup de las imagenes
   elementsContainer.addEventListener("click", (event) => {
@@ -188,11 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //funcion para mostrar la ventata de editar avatar
   editAvatarButton.addEventListener("click", () => {
-    editAvatar.style.display = "flex";
+    avatarPopup.open();
   });
-
-  const formValidatorAvatar = new popupWithForm("#editAvatar", modal);
-  formValidatorAvatar.setEventListeners();
 
   //cerrar el modal nueva imagen
   newImagen.addEventListener("click", (event) => {
@@ -216,12 +226,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Funciones
 
-  //Funcion para cerrar el popup de las imagenes
-  function closeEditModalImg() {
-    newImagen.style.display = "none";
-    popupForm.close();
-  }
-
   // Función para guardar los cambios en el perfil
   function saveProfile() {
     nameElement.textContent = nameInput.value;
@@ -229,15 +233,8 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.style.display = "none";
   }
 
-  // Función para cerrar el modal sin guardar cambios
-  function closeEditModal() {
-    modal.style.display = "none";
-  }
-
   // Asignar eventos
   saveButton.addEventListener("click", saveProfile);
-  closeButton.addEventListener("click", closeEditModal);
-  closeButtonImg.addEventListener("click", closeEditModalImg);
 
   closeButtonPopup.addEventListener("click", () => {
     const popup = document.querySelector(".popup");
