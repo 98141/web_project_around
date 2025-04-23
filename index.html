@@ -27,7 +27,11 @@
         <section class="profile">
           <div class="profile__avatarr">
             <img src="" alt="Avatar" class="profile__avatar" />
-            <button class="profile__edit-avatar" aria-label="Editar Avatar" id="editAvatarButton">
+            <button
+              class="profile__edit-avatar"
+              aria-label="Editar Avatar"
+              id="editAvatarButton"
+            >
               <img
                 src="./images/edit_avatar.png"
                 alt="Botón para editar Avatar"
@@ -175,6 +179,18 @@
             <p class="form__title">¿Estás seguro/a?</p>
             <button type="submit" class="form__submit form__delete">Si</button>
           </form>
+        </div>
+        <!-- Popup de confirmación -->
+        <div id="confirmDeletePopup" class="modal">
+          <div class="modal__contentConfirm">
+            <span class="modal__close" id="closeButtonConfirm">&times;</span>
+            <h2 class="modal__content-titleConfirm">¿Estás seguro?</h2>
+            <form class="form" name="confirm-delete-form">
+              <button type="submit" class="form__submitConfirm">
+                Sí, eliminar
+              </button>
+            </form>
+          </div>
         </div>
       </main>
       <footer class="footer">

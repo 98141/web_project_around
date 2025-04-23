@@ -47,7 +47,7 @@ export default class Card {
     deleteButton.textContent = "🗑️";
     deleteButton.addEventListener("click", () => {
       if (this._handleDeleteCard) {
-        this._handleDeleteCard(this._id)
+        this._handleDeleteCard(this._id, element)
           .then(() => {
             element.remove();
           })

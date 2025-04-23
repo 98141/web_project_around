@@ -5,6 +5,7 @@ import popupWithImages from "./popupWithImage.js";
 import popupWithForm from "./popupWithForm.js";
 import userInfo from "./userInfo.js";
 import { api } from "./api.js";
+import PopupWithConfirmation from "./PopupWithConfirmation.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Elementos del DOM
@@ -26,6 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const editAvatarButton = document.getElementById("editAvatarButton");
   const editAvatar = document.getElementById("editAvatar");
+
+  //popup de confirmacion
+  const confirmDeletePopup = new PopupWithConfirmation("#confirmDeletePopup");
+  confirmDeletePopup.setEventListeners();
 
   // Función para cerrar el modal con la tecla Esc
   function closeOnEsc(event) {
@@ -66,14 +71,21 @@ document.addEventListener("DOMContentLoaded", () => {
             return isLiked;
           });
       },
-      handleDeleteCard: (cardId) => {
-        return api
-          .removeCard(cardId)
-          .then(() => {
-          })
-          .catch((err) => {
-            console.error("Error al eliminar tarjeta:", err);
+      handleDeleteCard: (cardId, element) => {
+        return new Promise((resolve) => {
+          confirmDeletePopup.open(() => {
+            api
+              .removeCard(cardId)
+              .then(() => {
+                element.remove();
+                confirmDeletePopup.close();
+                resolve(); // para que la tarjeta se elimine visualmente
+              })
+              .catch((err) =>
+                console.error("Error al eliminar tarjeta:", err)
+              );
           });
+        });
       },
     });
 
